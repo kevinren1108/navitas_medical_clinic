@@ -1,0 +1,20 @@
+.timeLineChart {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 21%;
+}
+
+.timeLineChart::-webkit-scrollbar{
+    height: 15px;
+}
+
+.timeLineChart::-webkit-scrollbar-track{
+    background-color: darkgray;
+    border-radius: 100px;
+}
+
+.timeLineChart::-webkit-scrollbar-thumb{
+    background-image:  linear-gradient(90deg, #cfcfcf 0%, #cfcfcf 99%);
+    box-shadow: inset 2px 1px 5px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 100px;
+}

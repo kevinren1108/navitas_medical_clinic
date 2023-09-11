@@ -1,17 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import Header from './Layout/Header';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SideBar from './Layout/Sidebar';
+import { Col, Container, Row } from 'react-bootstrap';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <BrowserRouter>
+    <Container fluid>
+      <Row className=''>
+        <Col xs={'2'} className='px-0 border-end '>
+          <SideBar />
+        </Col>
+        <Col className='px-0'>
+          <Header />
+          <App/>
+        </Col>
+
+      </Row>
+
+    </Container>
+
+
+
+  </BrowserRouter>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+

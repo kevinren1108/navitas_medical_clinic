@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Link } from "react-router-dom";
+import Patient from "./Page/Patient";
+import Appointment from "./Page/Appointment";
+import Schedule from "./Page/Schedule";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/patient" element={<Patient />} />
+        <Route path="/appointment" element={<Appointment />} />
+        <Route path="/schedule" element={<Schedule />} />
+        <Route path="*" element={<NoMatch />} />
+      </Routes>
+    
+  );
+}
+
+function Home() {
+  return (
+    <div>
+      <h2>Home</h2>
     </div>
   );
 }
 
-export default App;
+function NoMatch() {
+  return (
+    <div>
+      <h2>Nothing to see here!</h2>
+      <p>
+        <Link to="/">Go to the home page</Link>
+      </p>
+    </div>
+  );
+}
