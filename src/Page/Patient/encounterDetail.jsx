@@ -19,28 +19,35 @@ function EncounterDeatil() {
                         <Row>
                             <Col>
                                 Date of visit
-                                <Form.Control id="visitDate" type="date" value="2013-01-08" disabled />
-                                <label htmlFor="visitDate">Date</label>
-                                
+                                <Form.Group>
+                                    <Form.Control id="visitDate" type="date" value="2013-01-08" disabled />
+                                    <Form.Label htmlFor="visitDate">Date</Form.Label>
+                                </Form.Group>
                             </Col>
                             <Col>
-                                
+
                             </Col>
                         </Row>
 
                         <Row>
                             <Col>
-                                Name of Patient 
+                                Name of Patient
                             </Col>
                         </Row>
                         <Row>
-                           <Col>    
-                                <Form.Control type="text" value="Mcdonload" id="firstName" disabled />
-                                <label className="" htmlFor="firstName">First Name</label>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Control type="text" value="Mcdonload" id="firstName" disabled />
+                                    <Form.Label className="" htmlFor="firstName">First Name</Form.Label>
+                                </Form.Group>
+
                             </Col>
-                            <Col>   
-                                <Form.Control type="text" value="Jepthon" id="lastName" disabled />
-                                <label className="" htmlFor="lastName">Last Name</label>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Control type="text" value="Jepthon" id="lastName" disabled />
+                                    <Form.Label className="" htmlFor="lastName">Last Name</Form.Label>
+                                </Form.Group>
+
                             </Col>
                         </Row>
 
@@ -50,19 +57,22 @@ function EncounterDeatil() {
                             </Col>
                         </Row>
                         <Row>
-                           <Col>
-                                <Form.Control as="textarea" value={textPlaceHolder + textPlaceHolder + textPlaceHolder} rows={3} disabled/>
-                           </Col>
+                            <Col>
+                                <Form.Control as="textarea" value={textPlaceHolder + textPlaceHolder + textPlaceHolder} rows={3} disabled />
+                            </Col>
                         </Row>
 
                         <Row>
                             <Col>
                                 Date When Complaint Started
-                                <Form.Control id="complaintDate" type="date" value="2013-01-02" disabled />
-                                <label htmlFor="complaintDate">Date</label>
+                                <Form.Group>
+                                    <Form.Control id="complaintDate" type="date" value="2013-01-02" disabled />
+                                    <Form.Label htmlFor="complaintDate">Date</Form.Label>
+                                </Form.Group>
+
                             </Col>
                             <Col>
-                                
+
                             </Col>
                         </Row>
 
@@ -72,10 +82,10 @@ function EncounterDeatil() {
                             </Col>
                         </Row>
                         <Row>
-                           <Col>
-                                <Form.Control as="textarea" value={textPlaceHolder + textPlaceHolder + textPlaceHolder} rows={3} disabled/>
-                           </Col>
-                        </Row> 
+                            <Col>
+                                <Form.Control as="textarea" value={textPlaceHolder + textPlaceHolder + textPlaceHolder} rows={3} disabled />
+                            </Col>
+                        </Row>
 
                         <Row>
                             <Col>
@@ -83,19 +93,19 @@ function EncounterDeatil() {
                             </Col>
                         </Row>
                         <Row>
-                           <Col>
-                                <Form.Check  disabled label="Activity" id="activity" />
-                                <Form.Check  disabled defaultChecked label="Behavior" id="behavior" />
-                                <Form.Check  disabled label="Bowel Routine" id="bowelRoutine" />
-                                <Form.Check  disabled label="Distress/Pain" id="distressPain" />
-                                <Form.Check  disabled label="Mobility" id="mobility" />
-                                <Form.Check  disabled defaultChecked label="Sleeping Habits" id="sleepingHabits" />
-                                <Form.Check  disabled label="Swallowing" id="swallowing" />
-                                <Form.Check  disabled defaultChecked label="Weight Loss" id="weightLoss" />
-                                <Form.Check  disabled label="Weight Gain" id="weightGain" />
-                                <Form.Check  disabled label="Other" id="other" />
-                           </Col>
-                        </Row> 
+                            <Col>
+                                <Form.Check disabled label="Activity" id="activity" />
+                                <Form.Check disabled defaultChecked label="Behavior" id="behavior" />
+                                <Form.Check disabled label="Bowel Routine" id="bowelRoutine" />
+                                <Form.Check disabled label="Distress/Pain" id="distressPain" />
+                                <Form.Check disabled label="Mobility" id="mobility" />
+                                <Form.Check disabled defaultChecked label="Sleeping Habits" id="sleepingHabits" />
+                                <Form.Check disabled label="Swallowing" id="swallowing" />
+                                <Form.Check disabled defaultChecked label="Weight Loss" id="weightLoss" />
+                                <Form.Check disabled label="Weight Gain" id="weightGain" />
+                                <Form.Check disabled label="Other" id="other" />
+                            </Col>
+                        </Row>
 
                     </Accordion.Body>
                 </Accordion.Item>
@@ -108,10 +118,10 @@ function EncounterDeatil() {
                             </Col>
                         </Row>
                         <Row>
-                           <Col>
-                                <Form.Control as="textarea" value={textPlaceHolder + textPlaceHolder + textPlaceHolder} rows={3} disabled/>
-                           </Col>
-                        </Row> 
+                            <Col>
+                                <Form.Control as="textarea" value={textPlaceHolder + textPlaceHolder + textPlaceHolder} rows={3} disabled />
+                            </Col>
+                        </Row>
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
