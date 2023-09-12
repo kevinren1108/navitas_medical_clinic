@@ -33,6 +33,8 @@ function Header() {
                                 placeholder="First Name/Last Name/MRN"
                                 aria-label="First Name/Last Name/MRN"
                                 aria-describedby="search"
+                                id="search"
+                                name="search"
                             />
                         </InputGroup>
 
