@@ -9,7 +9,9 @@ function PatientSel() {
         <Container >
             <Row className='mt-4 mb-3 '>
                 <Col className='col-4'>
-                    <img className="rounded-circle shadow-4-strong" src={Male} alt="avatar"/> 
+                    <img className="rounded-circle shadow-4-strong" 
+                    src={Male} 
+                    alt="avatar"/> 
                 </Col>
                 <Col className='' >
                     <h5>Mcdonload Jepthon</h5>

@@ -4,32 +4,38 @@ function HistoryTest() {
   return (
     <div className="position-relative" style={{borderLeft: "2px dashed #eee"}} > 
         <div>
-            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' style={{background: "#ffee93"}} >
+            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' 
+            style={{background: "#ffee93"}} >
                 Medication
             </div>
         </div>
         <div>
-            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block'  style={{background: "#ffee93"}} >
+            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block'  
+            style={{background: "#ffee93"}} >
                 Medication
             </div>
         </div>
         <div>
-            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block'  style={{background: "#ffee93"}} >
+            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block'  
+            style={{background: "#ffee93"}} >
                 Medication
             </div>
         </div>
         <div>
-            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block'  style={{background: "#fcf5c7"}} >
+            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block'  
+            style={{background: "#fcf5c7"}} >
                 Injection
             </div>
         </div>
         <div>
-            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block'  style={{background: "#79addc"}} >
+            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block'  
+            style={{background: "#79addc"}} >
                 Pescription
             </div>
         </div>
         <div  >
-            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block'  style={{background: "#ffc09f"}} >
+            <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block'  
+            style={{background: "#ffc09f"}} >
                 Health Consolation
             </div>
         </div>

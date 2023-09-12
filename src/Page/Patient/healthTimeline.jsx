@@ -16,47 +16,56 @@ function HealthTimeline() {
             <div className="timeLineChart mt-2 border rounded-bottom-3 p-3 pb-0" style={{ overflow: "auto"}}>
                 <div className="position-relative" >
                     <div>
-                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' style={{ background: "#ffee93"}} >
+                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' 
+                        style={{ background: "#ffee93"}} >
                             Medication
                         </div>
                     </div>
                     <div>
-                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' style={{ background: "#ffee93"}} >
+                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' 
+                        style={{ background: "#ffee93"}} >
                             Medication
                         </div>
                     </div>
                     <div>
-                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' style={{ background: "#ffee93"}} >
+                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' 
+                        style={{ background: "#ffee93"}} >
                             Medication
                         </div>
                     </div>
                     <div>
-                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' style={{ background: "#fcf5c7"}} >
+                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' 
+                        style={{ background: "#fcf5c7"}} >
                             Injection
                         </div>
                     </div>
                     <div>
-                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' style={{ background: "#79addc"}} >
+                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' 
+                        style={{ background: "#79addc"}} >
                             Pescription
                         </div>
                     </div>
                     <div>
-                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' style={{ background: "#79addc"}} >
+                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' 
+                        style={{ background: "#79addc"}} >
                             Pescription
                         </div>
                     </div>
                     <div>
-                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' style={{ background: "#79addc"}} >
+                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' 
+                        style={{ background: "#79addc"}} >
                             Pescription
                         </div>
                     </div>
                     <div>
-                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' style={{ background: "#79addc"}} >
+                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' 
+                        style={{ background: "#79addc"}} >
                             Pescription
                         </div>
                     </div>
                     <div>
-                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' style={{ background: "#ffc09f"}} >
+                        <div className='border-1 rounded-pill p-2 w-auto mb-1 d-inline-block' 
+                        style={{ background: "#ffc09f"}} >
                             Health Consolation
                         </div>
                     </div>

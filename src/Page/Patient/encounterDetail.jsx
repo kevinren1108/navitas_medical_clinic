@@ -58,7 +58,10 @@ function EncounterDeatil() {
                         </Row>
                         <Row>
                             <Col>
-                                <Form.Control as="textarea" value={textPlaceHolder + textPlaceHolder + textPlaceHolder} rows={3} disabled />
+                                <Form.Control as="textarea" 
+                                value={textPlaceHolder + textPlaceHolder + textPlaceHolder} 
+                                rows={3} 
+                                disabled />
                             </Col>
                         </Row>
 
@@ -83,7 +86,10 @@ function EncounterDeatil() {
                         </Row>
                         <Row>
                             <Col>
-                                <Form.Control as="textarea" value={textPlaceHolder + textPlaceHolder + textPlaceHolder} rows={3} disabled />
+                                <Form.Control as="textarea" 
+                                value={textPlaceHolder + textPlaceHolder + textPlaceHolder} 
+                                rows={3} 
+                                disabled />
                             </Col>
                         </Row>
 
@@ -119,7 +125,10 @@ function EncounterDeatil() {
                         </Row>
                         <Row>
                             <Col>
-                                <Form.Control as="textarea" value={textPlaceHolder + textPlaceHolder + textPlaceHolder} rows={3} disabled />
+                                <Form.Control as="textarea" 
+                                value={textPlaceHolder + textPlaceHolder + textPlaceHolder} 
+                                rows={3} 
+                                disabled />
                             </Col>
                         </Row>
                     </Accordion.Body>
