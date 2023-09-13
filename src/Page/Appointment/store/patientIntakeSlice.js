@@ -29,8 +29,8 @@ const initialState = {
     itCond: "No", itCondInput: "", itCondList: []
 }
 
-export const counterSlice = createSlice({
-    name: 'counter',
+export const patientIntakeSlice = createSlice({
+    name: 'patientIntake',
     initialState,
     reducers: {
         updateField: (state, action) => {
@@ -72,6 +72,6 @@ export const counterSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { updateField, handleSamePhyscalAndMail, 
     handleDiffPhyscalAndMail, handleListPush, handleListDelete 
-} = counterSlice.actions
+} = patientIntakeSlice.actions
 
-export default counterSlice.reducer
+export default patientIntakeSlice.reducer

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import PatientSel from './patientSel'
-import HealthTimeline from './healthTimeline'
-import EncounterDeatil from './encounterDetail'
+import PatientSel from './Component/patientSel'
+import HealthTimeline from './Component/healthTimeline'
+import EncounterDeatil from './Component/encounterDetail'
 
 function Patient() {
   return (

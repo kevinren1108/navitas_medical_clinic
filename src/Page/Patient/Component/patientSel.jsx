@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import TextBubble from '../../Layout/UI/textBubble'
-import Male from "../../Assets/male_avator.jpg"
+import TextBubble from '../../../Layout/UI/textBubble'
+import Male from "../../../Assets/male_avator.jpg"
 
 function PatientSel() {
   return (

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
 import { PlusCircle, XCircleFill } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux';
 import StepWizard from 'react-step-wizard';
 import { updateField, handleSamePhyscalAndMail, 
 	handleDiffPhyscalAndMail, handleListPush, handleListDelete 
-} from './store/patientIntakeSlice'
+} from '../Store/patientIntakeSlice'
 
 function PatientIntakeForm() {
 
@@ -13,13 +13,14 @@ function PatientIntakeForm() {
 	const dispatch = useDispatch()
 
 	const handleFormChange = (field) => (e) => {
-		// console.log
-		if (e.target.type === "checkbox") {
+		// Handle special case checkbox input
+		if (e.target.type === "checkbox") { 
 			if (e.target.checked === true) 
 				dispatch(updateField({field,value: true}))
 			else 
 				dispatch(updateField({field,value: false}))
 		}else{
+		// Handle every other input(text, radio)
 			dispatch(updateField({field,value: e.target.value}))
 		}
 	}
@@ -175,21 +176,20 @@ function First(props) {
 			</Row>
 
 			<Row>
-				<Col>
+				<Col>	
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itHeight" name="itHeight" type="text"
 							value={props.form.itHeight}
 							onChange={props.handleFormChange('itHeight')} />
-						<Form.Label htmlFor="itHeight">Height</Form.Label>
+						<Form.Label htmlFor="itHeight">Height/cm</Form.Label>				
 					</Form.Floating>
-
 				</Col>
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itWeight" name="itWeight" type="text"
 							value={props.form.itWeight}
 							onChange={props.handleFormChange('itWeight')} />
-						<Form.Label htmlFor="itWeight">Weight</Form.Label>
+						<Form.Label htmlFor="itWeight">Weight/kg</Form.Label>
 					</Form.Floating>
 
 				</Col>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import PatientSel from '../Patient/patientSel'
-import PatientIntakeForm from './patientIntakeForm'
+import PatientSel from '../Patient/Component/patientSel'
+import PatientIntakeForm from './Component/patientIntakeForm'
 
 function Appointment() {
   return (
