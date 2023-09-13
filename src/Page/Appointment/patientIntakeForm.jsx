@@ -1,58 +1,101 @@
 import React, { useState } from 'react'
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
-import { PlusCircle } from 'react-bootstrap-icons'
+import { PlusCircle, XCircleFill } from 'react-bootstrap-icons'
 import StepWizard from 'react-step-wizard';
 import 'animate.css';
 
+
 function PatientIntakeForm() {
 
+	// Form States
 	const [inPatient, SetInPatient] = useState({
-		itDate: "", itFName: "", itLName: "",
-		itDoB: "", itHealthNo: "", itPhone: "", itAPhone: "",
-		itEmail: "", itPharmacy: "", itEmergenName: "",
-		itEmergenPhone: "", itHeight: "", itWeight: "", itGender: "",
-		itAddress: "", itCity: "", itProv: "", itPostal: "", itAPsame: false,
-		itMAddress: "", itMCity: "", itMPostal: "", itMailEnable: true,
+		itDate: "", 
+		// Patient personal info
+		itFName: "", itLName: "", itDoB: "", 
+		itHeight: "", itWeight: "", itGender: "",
+		// Patient personal contact
+		itPhone: "", itAPhone: "", itEmail: "", 
+		// Patient healthcare info
+		itPharmacy: "", itHealthNo: "", 
+		itEmergenName: "", itEmergenPhone: "", 
+		itInsProvder: "", itInsGroup: "", itInsCosID: "", 
+		// Patient Address info
+		itAddress: "", itCity: "", itProv: "", itPostal: "", 
+		itMAddress: "", itMCity: "", itMProv: "", itMPostal: "", 
+		itAPsame: false, itMailEnable: true,
+		// Patient immu info
 		itTetanus: false, itPneumonia: false, itShingles: false,
-		itCovidVac: false, itChildhood: false, itAllerg: "", itAllegT: "",
-		itInsProvder: "", itInsGroup: "", itInsCosID: ""
+		itCovidVac: false, itChildhood: false, 
+		// Patient allergies info
+		itAllerg: "No", itAllergInput: "", itAllergList: [],
+		// Patient Medications info
+		itMed: "No", itMedInput: "", itMedList: []
 	})
+
+	// Handle different type form change
 	const handleChange = (e) => {
+		// Handle change for checkbox
 		if (e.target.type === "checkbox") {
-			if (e.target.checked === true) {
-				if (e.target.name === "itAPsame") {
-					SetInPatient({ ...inPatient, [e.target.name]: true, "itMailEnable": false })
-				} else {
-					SetInPatient({ ...inPatient, [e.target.name]: true })
-				}
-			}
-			else {
-				if (e.target.name === "itAPsame") {
-					SetInPatient({ ...inPatient, [e.target.name]: false, "itMailEnable": true })
-				} else {
-					SetInPatient({ ...inPatient, [e.target.name]: false })
-				}
-			}
-
-
-		}
-		else {
+			if (e.target.checked === true) 
+				SetInPatient({ ...inPatient, [e.target.name]: true })
+			else 
+				SetInPatient({ ...inPatient, [e.target.name]: false })
+		// Handle change for radio selection
+		}else if(e.target.type === "select-one"){
+			SetInPatient({...inPatient, [e.target.name]: e.target.value})
+		// Handle change for all other input type( text input, textare, etc)
+		}else {
 			SetInPatient({ ...inPatient, [e.target.name]: e.target.value })
 		}
-
 	}
 
-	const [state, updateState] = useState({
-		form: {},
-	})
+	// Handle same physical and mailing address check box 
+	const handleSameAddress = (e) => {
+		if (e.target.checked === true) {
+			SetInPatient({ ...inPatient, itAPsame: true, itMailEnable: false, 
+				itMAddress: inPatient.itAddress, 
+				itMCity: inPatient.itCity,
+				itMProv: inPatient.itProv,
+				itMPostal: inPatient.itPostal })
+			
+		}else{
+			SetInPatient({ ...inPatient, itAPsame: false, itMailEnable: true,
+				itMAddress: "", 
+				itMCity: "",
+				itMProv: "",
+				itMPostal: "" })
+		}
+	}
 
-	const setInstance = (SW) =>
-		updateState({
-			...state,
-			SW
-		});
+	// Handle add allergie
+	const addAllergies = (newValue) => {
+		if(newValue && !inPatient.itAllergList.includes(newValue)){
+			SetInPatient({...inPatient, itAllergList: [...inPatient.itAllergList, newValue ], itAllergInput: ""})
+		}else{
+			SetInPatient({...inPatient, itAllergInput: ""})
+		}
+		
+	}
 
-	const { SW } = state;
+	const handleAllergDelete = (deleteItem) => {
+		const updateList = inPatient.itAllergList.filter(item => item !== deleteItem)
+		SetInPatient({...inPatient, itAllergList: updateList})
+	}
+	 
+	// Handle add medications
+	const addMedications = (newValue) => {
+		if(newValue && !inPatient.itMedList.includes(newValue)){
+			SetInPatient({...inPatient, itMedList: [...inPatient.itMedList, newValue ], itMedInput: ""})
+		}else{
+			SetInPatient({...inPatient, itMedInput: ""})
+		}
+		
+	}
+	
+	const handleMedDelete = (deleteItem) => {
+		const updateList = inPatient.itMedList.filter(item => item !== deleteItem)
+		SetInPatient({...inPatient, itMedList: updateList})
+	}
 
 	return (
 		<div className='mt-2'>
@@ -64,11 +107,20 @@ function PatientIntakeForm() {
 				isHashEnabled
 				// transitions={custom}
 				// nav={<Nav />}
-				instance={setInstance}
 			>
 				<First inPatient={inPatient} handleChange={handleChange} />
-				<Second inPatient={inPatient} handleChange={handleChange} />
-				<Third inPatient={inPatient} handleChange={handleChange} />
+				<Second 
+					inPatient={inPatient} 
+					handleChange={handleChange} 
+					handleSameAddress={handleSameAddress} 
+				/>
+				<Third inPatient={inPatient} 
+					handleChange={handleChange} 
+					addAllergies={addAllergies} 
+					handleAllergDelete={handleAllergDelete}
+					addMedications={addMedications}
+					handleMedDelete={handleMedDelete}
+				/>
 			</StepWizard>
 		</div>
 	);
@@ -136,11 +188,12 @@ function First(props) {
 					<Form.Floating className='mb-3'>
 						<Form.Select id="itGender" name="itGender"
 							value={props.inPatient.itGender}
-							onChange={props.handleChange} >
-							<option value="M">Male</option>
-							<option value="F">Famale</option>
+							onChange ={props.handleChange} >
+							<option value=""></option>
+							<option value="Male">Male</option>
+							<option value="Famale">Famale</option>
 						</Form.Select>
-						<Form.Label htmlFor="itGender">Date of Birth</Form.Label>
+						<Form.Label htmlFor="itGender">Gender</Form.Label>
 					</Form.Floating>
 				</Col>
 			</Row>
@@ -245,6 +298,7 @@ function First(props) {
 						<Form.Select id="itHealthProv" name="itHealthProv"
 							value={props.inPatient.itHealthProv}
 							onChange={props.handleChange} >
+							<option value="AB"></option>
 							<option value="AB">Alberta</option>
 							<option value="BC">British Columbia</option>
 							<option value="MB">Manitoba</option>
@@ -297,7 +351,7 @@ function Second(props) {
 					<Form.Floating className='mb-3'>
 						<Form.Select id="itProv" name="itProv" value={props.inPatient.itProv}
 							onChange={props.handleChange} >
-
+							<option value="AB"></option>
 							<option value="AB">AB</option>
 							<option value="BC">BC</option>
 							<option value="MB">MB</option>
@@ -330,7 +384,7 @@ function Second(props) {
 						<Form.Check id="itAPsame" name="itAPsame" type="checkbox"
 							label='Mailing address is the same as home address'
 							checked={props.inPatient.itAPsame}
-							onChange={props.handleChange} />
+							onChange={props.handleSameAddress} />
 					</Form.Group>
 				</Col>
 			</Row>
@@ -338,16 +392,11 @@ function Second(props) {
 			<Row>
 				<Col>
 					<Form.Floating className='mb-3'>
-						{props.inPatient.itMailEnable ?
 							<Form.Control id="itMAddress" name="itMAddress" type="text"
 								value={props.inPatient.itMAddress}
-								onChange={props.handleChange} />
-							:
-							<Form.Control id="itMAddress" name="itMAddress" type="text"
-								disabled value={props.inPatient.itAddress}
-								onChange={props.handleChange} />
-						}
-
+								onChange={props.handleChange} 
+								disabled={!props.inPatient.itMailEnable}
+							/>
 						<Form.Label htmlFor="itAddress">Mailing Address</Form.Label>
 					</Form.Floating>
 				</Col>
@@ -356,71 +405,46 @@ function Second(props) {
 			<Row>
 				<Col>
 					<Form.Floating className='mb-3'>
-						{props.inPatient.itMailEnable ?
 							<Form.Control id="itMCity" name="itMCity" type="text"
 								value={props.inPatient.itMCity}
-								onChange={props.handleChange} />
-							:
-							<Form.Control id="itMCity" name="itMCity" type="text" disabled
-								value={props.inPatient.itCity}
-								onChange={props.handleChange} />
-						}
+								onChange={props.handleChange} 
+								disabled={!props.inPatient.itMailEnable}
+							/>
 						<Form.Label htmlFor="itMCity">City/Towm</Form.Label>
 					</Form.Floating>
 				</Col>
 				<Col>
 					<Form.Floating className='mb-3'>
-						{props.inPatient.itMailEnable ?
-							<Form.Select id="itMProv" name="itMProv"
-								value={props.inPatient.itMProv}
-								onChange={props.handleChange} >
-								<option value="AB">AB</option>
-								<option value="BC">BC</option>
-								<option value="MB">MB</option>
-								<option value="NB">NB</option>
-								<option value="NL">NL</option>
-								<option value="NS">NS</option>
-								<option value="ON">ON</option>
-								<option value="PE">PE</option>
-								<option value="QC">QC</option>
-								<option value="SK">SK</option>
-								<option value="NT">NT</option>
-								<option value="NU">NU</option>
-								<option value="YT">YT</option>
-							</Form.Select>
-							:
-							<Form.Select id="itMProv" name="itMProv" disabled
-								value={props.inPatient.itProv}
-								onChange={props.handleChange} >
-								<option value="AB">AB</option>
-								<option value="BC">BC</option>
-								<option value="MB">MB</option>
-								<option value="NB">NB</option>
-								<option value="NL">NL</option>
-								<option value="NS">NS</option>
-								<option value="ON">ON</option>
-								<option value="PE">PE</option>
-								<option value="QC">QC</option>
-								<option value="SK">SK</option>
-								<option value="NT">NT</option>
-								<option value="NU">NU</option>
-								<option value="YT">YT</option>
-							</Form.Select>
-						}
-						<Form.Label htmlFor="itProv">Province/Territory</Form.Label>
+						<Form.Select id="itMProv" name="itMProv"
+							value={props.inPatient.itMProv}
+							onChange={props.handleChange} 
+							disabled={!props.inPatient.itMailEnable}
+						>
+							<option value="AB"></option>
+							<option value="AB">AB</option>
+							<option value="BC">BC</option>
+							<option value="MB">MB</option>
+							<option value="NB">NB</option>
+							<option value="NL">NL</option>
+							<option value="NS">NS</option>
+							<option value="ON">ON</option>
+							<option value="PE">PE</option>
+							<option value="QC">QC</option>
+							<option value="SK">SK</option>
+							<option value="NT">NT</option>
+							<option value="NU">NU</option>
+							<option value="YT">YT</option>
+						</Form.Select>
+						<Form.Label htmlFor="itMProv">Province/Territory</Form.Label>
 					</Form.Floating>
 				</Col>
 				<Col>
 					<Form.Floating className='mb-3'>
-						{props.inPatient.itMailEnable ?
-							<Form.Control id="itMPostal" name="itMPostal" type="text"
-								value={props.inPatient.itMPostal}
-								onChange={props.handleChange} />
-							:
-							<Form.Control id="itMPostal" name="itMPostal" type="text" disabled
-								value={props.inPatient.itPostal}
-								onChange={props.handleChange} />
-						}
+						
+						<Form.Control id="itMPostal" name="itMPostal" type="text"
+							value={props.inPatient.itMPostal}
+							onChange={props.handleChange}
+							disabled={!props.inPatient.itMailEnable} />
 						<Form.Label htmlFor="itMPostal">Postal Code</Form.Label>
 					</Form.Floating>
 				</Col>
@@ -516,20 +540,122 @@ function Third(props) {
 								<Form.Label htmlFor="itAllergY">Have allergies</Form.Label>
 							</div>
 							<div className='ms-auto'>
-								<Form.Check name="itAllerg" id="itAllergY" inline label="Yes" type='radio' />
-								<Form.Check name="itAllerg" id="itAllergN" inline label="No" type='radio' />
+								<Form.Check inline name="itAllerg" 
+									id="itAllergY" 
+									value="Yes"  
+									label="Yes" 
+									type='radio' 
+									checked={props.inPatient.itAllerg === 'Yes'}
+									onChange={props.handleChange}
+								/>
+								<Form.Check inline name="itAllerg" 
+									id="itAllergN" 
+									value="No"  
+									label="No" 
+									type='radio' 
+									checked={props.inPatient.itAllerg === 'No'}
+									onChange={props.handleChange}
+									disabled={props.inPatient.itAllergList.length > 0}
+								/>
 							</div>
-
-
 						</div>
+
 						<InputGroup className="mb-3">
-							<Form.Control style={{background: "none", borderRight: "0"}} aria-label="allergies" />
-							<InputGroup.Text onClick={() => console.log("123")} style={{background: "none", borderLeft: "0"}}><PlusCircle /></InputGroup.Text>
+							<Form.Control style={{borderRight: "0"}} 
+								value={props.inPatient.itAllergInput}
+								name="itAllergInput" 
+								id="itAllergInput"
+								onChange={props.handleChange} 
+								disabled={props.inPatient.itAllerg !== "Yes"}	
+							/>
+							<InputGroup.Text 
+								onClick={() => props.addAllergies(props.inPatient.itAllergInput)} 
+								style={{background: "none", borderLeft: "0"}}>
+								<PlusCircle />
+							</InputGroup.Text>
 						</InputGroup>
 						
+						<div className='mb-3'>
+							{props.inPatient.itAllergList.map((value, key) => (
+								
+								<div className='border rounded-pill d-inline-block p-3 pt-2 
+								pb-2 w-auto m-1 ms-0' key={key}>
+									<span className='text-break'>{value}</span>
+									<XCircleFill className='ms-1 text-danger fs-5' 
+										onClick={() => props.handleAllergDelete(value)}	
+									/>
+								</div>
+								
+								))
+							}
+						</div>
 
 					</Form.Group>
 
+				</Col>
+			</Row>
+
+			<Row>
+				<h5>Medications</h5>
+				<Col>
+					<Form.Group className='mb-3'>
+						<div className=' d-flex'>
+							<div className="me-auto">
+								<Form.Label htmlFor="itMedY">Currently taking medicaitons</Form.Label>
+							</div>
+							<div className='ms-auto'>
+								<Form.Check inline name="itMed" 
+									id="itMedY" 
+									value="Yes"  
+									label="Yes" 
+									type='radio' 
+									checked={props.inPatient.itMed === 'Yes'}
+									onChange={props.handleChange}
+								/>
+								<Form.Check inline name="itMed" 
+									id="itMedN" 
+									value="No"  
+									label="No" 
+									type='radio' 
+									checked={props.inPatient.itMed === 'No'}
+									onChange={props.handleChange}
+									disabled={props.inPatient.itMedList.length > 0}
+								/>
+							</div>
+						</div>
+
+						<InputGroup className="mb-3">
+							<Form.Control style={{borderRight: "0"}} 
+								value={props.inPatient.itMedInput}
+								name="itMedInput" 
+								id="itMedInput"
+								onChange={props.handleChange} 
+								disabled={props.inPatient.itMed !== "Yes"}	
+							/>
+							<InputGroup.Text 
+								onClick={() => props.addMedications(props.inPatient.itMedInput)} 
+								style={{background: "none", borderLeft: "0"}}>
+								<PlusCircle />
+							</InputGroup.Text>
+						</InputGroup>
+						
+						<div className='mb-3'>
+							{props.inPatient.itMedList.map((value, key) => (
+								
+								<div className='border rounded-pill
+									d-inline-block p-3 pt-2 pb-2 w-auto m-1 ms-0' key={key}>
+									<span className='text-break'>{value}</span>
+									<XCircleFill className='ms-1 text-danger fs-5' 
+										onClick={() => props.handleMedDelete(value)}	
+									/>
+								</div>
+								
+								))
+							}
+						</div>
+
+					</Form.Group>
+					
 				</Col>
 			</Row>
 			<Stats step={3} {...props} />
