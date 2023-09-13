@@ -1,6 +1,6 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import PatientSel from './patientSel'
+import PatientSel from '../Patient/patientSel'
 import PatientIntakeForm from './patientIntakeForm'
 
 function Appointment() {

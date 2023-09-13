@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
+import { PlusCircle } from 'react-bootstrap-icons'
 import StepWizard from 'react-step-wizard';
+import 'animate.css';
 
 function PatientIntakeForm() {
+
 	const [inPatient, SetInPatient] = useState({
 		itDate: "", itFName: "", itLName: "",
 		itDoB: "", itHealthNo: "", itPhone: "", itAPhone: "",
@@ -11,7 +14,8 @@ function PatientIntakeForm() {
 		itAddress: "", itCity: "", itProv: "", itPostal: "", itAPsame: false,
 		itMAddress: "", itMCity: "", itMPostal: "", itMailEnable: true,
 		itTetanus: false, itPneumonia: false, itShingles: false,
-		itCovidVac: false, itChildhood: false, itAllerg: "", itAllegT: ""
+		itCovidVac: false, itChildhood: false, itAllerg: "", itAllegT: "",
+		itInsProvder: "", itInsGroup: "", itInsCosID: ""
 	})
 	const handleChange = (e) => {
 		if (e.target.type === "checkbox") {
@@ -58,6 +62,7 @@ function PatientIntakeForm() {
 			<StepWizard
 				isLazyMount={true}
 				isHashEnabled
+				// transitions={custom}
 				// nav={<Nav />}
 				instance={setInstance}
 			>
@@ -71,7 +76,7 @@ function PatientIntakeForm() {
 
 export default PatientIntakeForm
 
-const Stats = ({nextStep, previousStep, totalSteps, step}) => (
+const Stats = ({ nextStep, previousStep, totalSteps, step }) => (
 	<div className="d-flex justify-content-center ">
 		{step > 1 &&
 			<Button className='btn btn-secondary btn-block' onClick={previousStep}>Go Back</Button>
@@ -84,7 +89,7 @@ const Stats = ({nextStep, previousStep, totalSteps, step}) => (
 	</div>
 );
 
-function First(props){
+function First(props) {
 	return (
 		<div>
 			<Row>
@@ -265,7 +270,7 @@ function First(props){
 	)
 }
 
-function Second(props){
+function Second(props) {
 	return (
 		<div>
 			<Row>
@@ -420,12 +425,45 @@ function Second(props){
 					</Form.Floating>
 				</Col>
 			</Row>
+			<div className='mb-3'>Insurance</div>
+			<Row>
+				<Col>
+					<Form.Floating className='mb-3'>
+						<Form.Control id="itInsProvder" name="itInsProvder" type="text"
+							value={props.inPatient.itInsProvder}
+							onChange={props.handleChange} />
+						<Form.Label htmlFor="itInsProvder">Insurance Provider</Form.Label>
+					</Form.Floating>
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
+					<Form.Floating className='mb-3'>
+						<Form.Control id="itInsGroup" name="itInsGroup" type="text"
+							value={props.inPatient.itInsGroup}
+							onChange={props.handleChange} />
+						<Form.Label htmlFor="itInsGroup">Insurance Group ID</Form.Label>
+					</Form.Floating>
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
+					<Form.Floating className='mb-3'>
+						<Form.Control id="itInsCosID" name="itInsCosID" type="text"
+							value={props.inPatient.itInsCosID}
+							onChange={props.handleChange} />
+						<Form.Label htmlFor="itInsCosID">Insurance Coustomer ID</Form.Label>
+					</Form.Floating>
+				</Col>
+			</Row>
 			<Stats step={2} {...props} />
 		</div>
 	)
 }
 
-function Third(props){
+function Third(props) {
 	return (
 		<div>
 			<Row>
@@ -484,8 +522,11 @@ function Third(props){
 
 
 						</div>
-						<span className='mb-3'>If yes, describe the reaction that occured with each medication</span>
-						<Form.Control as="textarea" name="itAllegT" id="itAllegT" rows={3} />
+						<InputGroup className="mb-3">
+							<Form.Control style={{background: "none", borderRight: "0"}} aria-label="allergies" />
+							<InputGroup.Text onClick={() => console.log("123")} style={{background: "none", borderLeft: "0"}}><PlusCircle /></InputGroup.Text>
+						</InputGroup>
+						
 
 					</Form.Group>
 

@@ -18,8 +18,9 @@ function PatientSel() {
                 </Col>
             </Row >
             <Row className='mb-3'>
-                <h5>MSP #</h5>
-                <p>123 324 3142</p>
+                <h5>HEALTH CARD NUMBER</h5>
+                <span>123 324 3142</span>
+                <span>Issued by British Columbia</span>
             </Row>
 
             <Row className='mb-3'>
@@ -30,7 +31,14 @@ function PatientSel() {
 
             <Row className='mb-3'> 
                 <h5>PREFFRRED COMMUNICATION:</h5>
-                <span>Cell: 718-987-2526</span>
+                <span>718-987-2526</span>
+            </Row>
+
+            <Row className='mb-3'> 
+                <h5>EMERGENCY CONTACT:</h5>
+                <span>Susan Jepthon</span>
+                <span>718-997-4879</span>
+                                           
             </Row>
 
             <Row className='mb-3'>

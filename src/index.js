@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SideBar from './Layout/Sidebar';
 import { Col, Container, Row } from 'react-bootstrap';
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
