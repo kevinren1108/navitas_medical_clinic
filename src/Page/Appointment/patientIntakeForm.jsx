@@ -1,100 +1,45 @@
 import React, { useState } from 'react'
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
 import { PlusCircle, XCircleFill } from 'react-bootstrap-icons'
+import { useDispatch, useSelector } from 'react-redux';
 import StepWizard from 'react-step-wizard';
-import 'animate.css';
-
+import { updateField, handleSamePhyscalAndMail, 
+	handleDiffPhyscalAndMail, handleListPush, handleListDelete 
+} from './store/patientIntakeSlice'
 
 function PatientIntakeForm() {
 
-	// Form States
-	const [inPatient, SetInPatient] = useState({
-		itDate: "", 
-		// Patient personal info
-		itFName: "", itLName: "", itDoB: "", 
-		itHeight: "", itWeight: "", itGender: "",
-		// Patient personal contact
-		itPhone: "", itAPhone: "", itEmail: "", 
-		// Patient healthcare info
-		itPharmacy: "", itHealthNo: "", 
-		itEmergenName: "", itEmergenPhone: "", 
-		itInsProvder: "", itInsGroup: "", itInsCosID: "", 
-		// Patient Address info
-		itAddress: "", itCity: "", itProv: "", itPostal: "", 
-		itMAddress: "", itMCity: "", itMProv: "", itMPostal: "", 
-		itAPsame: false, itMailEnable: true,
-		// Patient immu info
-		itTetanus: false, itPneumonia: false, itShingles: false,
-		itCovidVac: false, itChildhood: false, 
-		// Patient allergies info
-		itAllerg: "No", itAllergInput: "", itAllergList: [],
-		// Patient Medications info
-		itMed: "No", itMedInput: "", itMedList: []
-	})
+	const form = useSelector((state) => state.patientIntake)
+	const dispatch = useDispatch()
 
-	// Handle different type form change
-	const handleChange = (e) => {
-		// Handle change for checkbox
+	const handleFormChange = (field) => (e) => {
+		// console.log
 		if (e.target.type === "checkbox") {
 			if (e.target.checked === true) 
-				SetInPatient({ ...inPatient, [e.target.name]: true })
+				dispatch(updateField({field,value: true}))
 			else 
-				SetInPatient({ ...inPatient, [e.target.name]: false })
-		// Handle change for radio selection
-		}else if(e.target.type === "select-one"){
-			SetInPatient({...inPatient, [e.target.name]: e.target.value})
-		// Handle change for all other input type( text input, textare, etc)
-		}else {
-			SetInPatient({ ...inPatient, [e.target.name]: e.target.value })
+				dispatch(updateField({field,value: false}))
+		}else{
+			dispatch(updateField({field,value: e.target.value}))
 		}
 	}
 
 	// Handle same physical and mailing address check box 
 	const handleSameAddress = (e) => {
 		if (e.target.checked === true) {
-			SetInPatient({ ...inPatient, itAPsame: true, itMailEnable: false, 
-				itMAddress: inPatient.itAddress, 
-				itMCity: inPatient.itCity,
-				itMProv: inPatient.itProv,
-				itMPostal: inPatient.itPostal })
-			
+			dispatch(handleSamePhyscalAndMail())
 		}else{
-			SetInPatient({ ...inPatient, itAPsame: false, itMailEnable: true,
-				itMAddress: "", 
-				itMCity: "",
-				itMProv: "",
-				itMPostal: "" })
+			dispatch(handleDiffPhyscalAndMail())
 		}
 	}
 
-	// Handle add allergie
-	const addAllergies = (newValue) => {
-		if(newValue && !inPatient.itAllergList.includes(newValue)){
-			SetInPatient({...inPatient, itAllergList: [...inPatient.itAllergList, newValue ], itAllergInput: ""})
-		}else{
-			SetInPatient({...inPatient, itAllergInput: ""})
-		}
-		
+	// Handle add item to list dispatch
+	const addItemToList = (typeID, listID, inputID) => {
+		dispatch(handleListPush({typeID, listID, inputID}))
 	}
 
-	const handleAllergDelete = (deleteItem) => {
-		const updateList = inPatient.itAllergList.filter(item => item !== deleteItem)
-		SetInPatient({...inPatient, itAllergList: updateList})
-	}
-	 
-	// Handle add medications
-	const addMedications = (newValue) => {
-		if(newValue && !inPatient.itMedList.includes(newValue)){
-			SetInPatient({...inPatient, itMedList: [...inPatient.itMedList, newValue ], itMedInput: ""})
-		}else{
-			SetInPatient({...inPatient, itMedInput: ""})
-		}
-		
-	}
-	
-	const handleMedDelete = (deleteItem) => {
-		const updateList = inPatient.itMedList.filter(item => item !== deleteItem)
-		SetInPatient({...inPatient, itMedList: updateList})
+	const deleteItemFromList = (listID, deleteItem) => {
+		dispatch(handleListDelete({listID, deleteItem}))
 	}
 
 	return (
@@ -108,18 +53,20 @@ function PatientIntakeForm() {
 				// transitions={custom}
 				// nav={<Nav />}
 			>
-				<First inPatient={inPatient} handleChange={handleChange} />
+				<First 
+					form={form} 
+					handleFormChange={handleFormChange} 
+				/>
 				<Second 
-					inPatient={inPatient} 
-					handleChange={handleChange} 
+					form={form} 
+					handleFormChange={handleFormChange} 
 					handleSameAddress={handleSameAddress} 
 				/>
-				<Third inPatient={inPatient} 
-					handleChange={handleChange} 
-					addAllergies={addAllergies} 
-					handleAllergDelete={handleAllergDelete}
-					addMedications={addMedications}
-					handleMedDelete={handleMedDelete}
+				<Third 
+					form={form} 
+					handleFormChange={handleFormChange}
+					addItemToList={addItemToList}
+					deleteItemFromList={deleteItemFromList}
 				/>
 			</StepWizard>
 		</div>
@@ -142,14 +89,21 @@ const Stats = ({ nextStep, previousStep, totalSteps, step }) => (
 );
 
 function First(props) {
+
+	const validate = () => {
+        if (props.form.itFName !== "") { 
+            props.nextStep();
+        }
+    };
+
 	return (
 		<div>
 			<Row>
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itDate" name="itDate" type="date"
-							value={props.inPatient.itDate}
-							onChange={props.handleChange} />
+							value={props.form.itDate}
+							onChange={props.handleFormChange('itDate')} />
 						<Form.Label htmlFor="itDate">Date of this form was completed</Form.Label>
 					</Form.Floating>
 
@@ -159,8 +113,9 @@ function First(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itFName" name="itFName" type="text"
-							value={props.inPatient.itFName}
-							onChange={props.handleChange} />
+							value={props.form.itFName}
+							onChange={props.handleFormChange('itFName')}
+							></Form.Control>
 						<Form.Label htmlFor="itFName">Given Name</Form.Label>
 					</Form.Floating>
 
@@ -168,8 +123,8 @@ function First(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itLName" name="itLName" type="text"
-							value={props.inPatient.itLName}
-							onChange={props.handleChange} />
+							value={props.form.itLName}
+							onChange={props.handleFormChange('itLName')} />
 						<Form.Label htmlFor="itLName">Last Name</Form.Label>
 					</Form.Floating>
 
@@ -179,16 +134,16 @@ function First(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itDoB" name="itDoB" type="date"
-							value={props.inPatient.itDoB}
-							onChange={props.handleChange} />
+							value={props.form.itDoB}
+							onChange={props.handleFormChange('itDoB')} />
 						<Form.Label htmlFor="itDoB">Date of Birth</Form.Label>
 					</Form.Floating>
 				</Col>
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Select id="itGender" name="itGender"
-							value={props.inPatient.itGender}
-							onChange ={props.handleChange} >
+							value={props.form.itGender}
+							onChange ={props.handleFormChange('itGender')} >
 							<option value=""></option>
 							<option value="Male">Male</option>
 							<option value="Famale">Famale</option>
@@ -202,8 +157,8 @@ function First(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itPhone" name="itPhone" type="text"
-							value={props.inPatient.itPhone}
-							onChange={props.handleChange} />
+							value={props.form.itPhone}
+							onChange={props.handleFormChange('itPhone')} />
 						<Form.Label htmlFor="itPhone">Primary Phone</Form.Label>
 					</Form.Floating>
 
@@ -211,8 +166,8 @@ function First(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itAPhone" name="itAPhone" type="text"
-							value={props.inPatient.itAPhone}
-							onChange={props.handleChange} />
+							value={props.form.itAPhone}
+							onChange={props.handleFormChange('itAPhone')} />
 						<Form.Label htmlFor="itAPhone">Alternate Phone</Form.Label>
 					</Form.Floating>
 
@@ -223,8 +178,8 @@ function First(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itHeight" name="itHeight" type="text"
-							value={props.inPatient.itHeight}
-							onChange={props.handleChange} />
+							value={props.form.itHeight}
+							onChange={props.handleFormChange('itHeight')} />
 						<Form.Label htmlFor="itHeight">Height</Form.Label>
 					</Form.Floating>
 
@@ -232,41 +187,22 @@ function First(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itWeight" name="itWeight" type="text"
-							value={props.inPatient.itWeight}
-							onChange={props.handleChange} />
+							value={props.form.itWeight}
+							onChange={props.handleFormChange('itWeight')} />
 						<Form.Label htmlFor="itWeight">Weight</Form.Label>
 					</Form.Floating>
 
 				</Col>
 			</Row>
 
-			<Row>
-				<Col>
-					<Form.Floating className='mb-3'>
-						<Form.Control id="itEmail" name="itEmail" type="email"
-							value={props.inPatient.itEmail}
-							onChange={props.handleChange} />
-						<Form.Label htmlFor="itEmail">Email</Form.Label>
-					</Form.Floating>
-
-				</Col>
-				<Col>
-					<Form.Floating className='mb-3'>
-						<Form.Control id="itPharmacy" name="itPharmacy" type="text"
-							value={props.inPatient.itPharmacy}
-							onChange={props.handleChange} />
-						<Form.Label htmlFor="itPharmacy">Preferred Pharmacy</Form.Label>
-					</Form.Floating>
-
-				</Col>
-			</Row>
+			
 
 			<Row>
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itEmergenName" name="itEmergenName" type="text"
-							value={props.inPatient.itEmergenName}
-							onChange={props.handleChange} />
+							value={props.form.itEmergenName}
+							onChange={props.handleFormChange('itEmergenName')} />
 						<Form.Label htmlFor="itEmergenName">Emergency Contact Name</Form.Label>
 					</Form.Floating>
 
@@ -274,8 +210,8 @@ function First(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itEmergenPhone" name="itEmergenPhone" type="text"
-							value={props.inPatient.itEmergenPhone}
-							onChange={props.handleChange} />
+							value={props.form.itEmergenPhone}
+							onChange={props.handleFormChange('itEmergenPhone')} />
 						<Form.Label htmlFor="itEmergenPhone">Emergency Contact Phone</Form.Label>
 					</Form.Floating>
 
@@ -286,8 +222,8 @@ function First(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itHealthNo" name="itHealthNo" type="text"
-							value={props.inPatient.itHealthNo}
-							onChange={props.handleChange} />
+							value={props.form.itHealthNo}
+							onChange={props.handleFormChange('itHealthNo')} />
 						<Form.Label htmlFor="itHealthNo">Health Card Number</Form.Label>
 					</Form.Floating>
 
@@ -296,9 +232,9 @@ function First(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Select id="itHealthProv" name="itHealthProv"
-							value={props.inPatient.itHealthProv}
-							onChange={props.handleChange} >
-							<option value="AB"></option>
+							value={props.form.itHealthProv}
+							onChange={props.handleFormChange('itHealthProv')} >
+							<option value="" disabled defaultChecked>Please Select</option>
 							<option value="AB">Alberta</option>
 							<option value="BC">British Columbia</option>
 							<option value="MB">Manitoba</option>
@@ -312,6 +248,7 @@ function First(props) {
 							<option value="NT">Northwest Territories</option>
 							<option value="NU">Nunavut</option>
 							<option value="YT">Yukon</option>
+							
 						</Form.Select>
 						<Form.Label htmlFor="itHealthProv">Province/Territory of Issue</Form.Label>
 					</Form.Floating>
@@ -319,7 +256,7 @@ function First(props) {
 				</Col>
 			</Row>
 
-			<Stats step={1} {...props} />
+			<Stats step={1} {...props} nextStep={validate} />
 		</div>
 	)
 }
@@ -331,8 +268,8 @@ function Second(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itAddress" name="itAddress" type="text"
-							value={props.inPatient.itAddress}
-							onChange={props.handleChange} />
+							value={props.form.itAddress}
+							onChange={props.handleFormChange('itAddress')} />
 						<Form.Label htmlFor="itAddress">Physical Address</Form.Label>
 					</Form.Floating>
 				</Col>
@@ -342,16 +279,16 @@ function Second(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itCity" name="itCity" type="text"
-							value={props.inPatient.itCity}
-							onChange={props.handleChange} />
+							value={props.form.itCity}
+							onChange={props.handleFormChange('itCity')} />
 						<Form.Label htmlFor="itCity">City/Towm</Form.Label>
 					</Form.Floating>
 				</Col>
 				<Col>
 					<Form.Floating className='mb-3'>
-						<Form.Select id="itProv" name="itProv" value={props.inPatient.itProv}
-							onChange={props.handleChange} >
-							<option value="AB"></option>
+						<Form.Select id="itProv" name="itProv" value={props.form.itProv}
+							onChange={props.handleFormChange('itProv')} >
+							<option value="" disabled defaultChecked>Please Select</option>
 							<option value="AB">AB</option>
 							<option value="BC">BC</option>
 							<option value="MB">MB</option>
@@ -372,8 +309,8 @@ function Second(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itPostal" name="itPostal" type="text"
-							value={props.inPatient.itPostal}
-							onChange={props.handleChange} />
+							value={props.form.itPostal}
+							onChange={props.handleFormChange('itPostal')} />
 						<Form.Label htmlFor="itPostal">Postal Code</Form.Label>
 					</Form.Floating>
 				</Col>
@@ -383,8 +320,10 @@ function Second(props) {
 					<Form.Group className='mb-3'>
 						<Form.Check id="itAPsame" name="itAPsame" type="checkbox"
 							label='Mailing address is the same as home address'
-							checked={props.inPatient.itAPsame}
-							onChange={props.handleSameAddress} />
+							checked={props.form.itAPsame}
+							onChange={props.handleFormChange('itAPsame')} 
+							onClick={props.handleSameAddress}
+							/>
 					</Form.Group>
 				</Col>
 			</Row>
@@ -393,9 +332,9 @@ function Second(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 							<Form.Control id="itMAddress" name="itMAddress" type="text"
-								value={props.inPatient.itMAddress}
-								onChange={props.handleChange} 
-								disabled={!props.inPatient.itMailEnable}
+								value={props.form.itMAddress}
+								onChange={props.handleFormChange('itMAddress')} 
+								disabled={props.form.itAPsame}
 							/>
 						<Form.Label htmlFor="itAddress">Mailing Address</Form.Label>
 					</Form.Floating>
@@ -406,9 +345,9 @@ function Second(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 							<Form.Control id="itMCity" name="itMCity" type="text"
-								value={props.inPatient.itMCity}
-								onChange={props.handleChange} 
-								disabled={!props.inPatient.itMailEnable}
+								value={props.form.itMCity}
+								onChange={props.handleFormChange('itMCity')} 
+								disabled={props.form.itAPsame}
 							/>
 						<Form.Label htmlFor="itMCity">City/Towm</Form.Label>
 					</Form.Floating>
@@ -416,11 +355,11 @@ function Second(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Select id="itMProv" name="itMProv"
-							value={props.inPatient.itMProv}
-							onChange={props.handleChange} 
-							disabled={!props.inPatient.itMailEnable}
+							value={props.form.itMProv}
+							onChange={props.handleFormChange('itMProv')} 
+							disabled={props.form.itAPsame}
 						>
-							<option value="AB"></option>
+							<option value="" disabled defaultChecked>Please Select</option>
 							<option value="AB">AB</option>
 							<option value="BC">BC</option>
 							<option value="MB">MB</option>
@@ -442,9 +381,9 @@ function Second(props) {
 					<Form.Floating className='mb-3'>
 						
 						<Form.Control id="itMPostal" name="itMPostal" type="text"
-							value={props.inPatient.itMPostal}
-							onChange={props.handleChange}
-							disabled={!props.inPatient.itMailEnable} />
+							value={props.form.itMPostal}
+							onChange={props.handleFormChange('itMPostal')}
+							disabled={props.form.itAPsame} />
 						<Form.Label htmlFor="itMPostal">Postal Code</Form.Label>
 					</Form.Floating>
 				</Col>
@@ -454,8 +393,8 @@ function Second(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itInsProvder" name="itInsProvder" type="text"
-							value={props.inPatient.itInsProvder}
-							onChange={props.handleChange} />
+							value={props.form.itInsProvder}
+							onChange={props.handleFormChange('itInsProvder')} />
 						<Form.Label htmlFor="itInsProvder">Insurance Provider</Form.Label>
 					</Form.Floating>
 				</Col>
@@ -465,8 +404,8 @@ function Second(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itInsGroup" name="itInsGroup" type="text"
-							value={props.inPatient.itInsGroup}
-							onChange={props.handleChange} />
+							value={props.form.itInsGroup}
+							onChange={props.handleFormChange('itInsGroup')} />
 						<Form.Label htmlFor="itInsGroup">Insurance Group ID</Form.Label>
 					</Form.Floating>
 				</Col>
@@ -476,8 +415,8 @@ function Second(props) {
 				<Col>
 					<Form.Floating className='mb-3'>
 						<Form.Control id="itInsCosID" name="itInsCosID" type="text"
-							value={props.inPatient.itInsCosID}
-							onChange={props.handleChange} />
+							value={props.form.itInsCosID}
+							onChange={props.handleFormChange('itInsCosID')} />
 						<Form.Label htmlFor="itInsCosID">Insurance Coustomer ID</Form.Label>
 					</Form.Floating>
 				</Col>
@@ -488,6 +427,11 @@ function Second(props) {
 }
 
 function Third(props) {
+
+	const submit = () => {
+        alert('You did it! Yay!') // eslint-disable-line
+    };
+
 	return (
 		<div>
 			<Row>
@@ -497,18 +441,18 @@ function Third(props) {
 
 						<Form.Check id="itTetanus" name="itTetanus"
 							type="checkbox" label='Tetanus'
-							checked={props.inPatient.itTetanus}
-							onChange={props.handleChange}
+							checked={props.form.itTetanus}
+							onChange={props.handleFormChange('itTetanus')}
 						/>
 						<Form.Check id="itPneumonia" name="itPneumonia"
 							type="checkbox" label='Pneumonia'
-							checked={props.inPatient.itPneumonia}
-							onChange={props.handleChange}
+							checked={props.form.itPneumonia}
+							onChange={props.handleFormChange('itPneumonia')}
 						/>
 						<Form.Check id="itShingles" name="itShingles"
 							type="checkbox" label='Shingles'
-							checked={props.inPatient.itShingles}
-							onChange={props.handleChange}
+							checked={props.form.itShingles}
+							onChange={props.handleFormChange('itShingles')}
 						/>
 
 					</Form.Group>
@@ -518,13 +462,13 @@ function Third(props) {
 
 						<Form.Check id="itCovidVac" name="itCovidVac"
 							type="checkbox" label='COVID Vaccines'
-							checked={props.inPatient.itCovidVac}
-							onChange={props.handleChange}
+							checked={props.form.itCovidVac}
+							onChange={props.handleFormChange('itCovidVac')}
 						/>
 						<Form.Check id="itChildhood" name="itChildhood"
 							type="checkbox" label='Childhood Immunizations'
-							checked={props.inPatient.itChildhood}
-							onChange={props.handleChange}
+							checked={props.form.itChildhood}
+							onChange={props.handleFormChange('itChildhood')}
 						/>
 
 					</Form.Group>
@@ -537,7 +481,7 @@ function Third(props) {
 					<Form.Group className='mb-3'>
 						<div className=' d-flex'>
 							<div className="me-auto">
-								<Form.Label htmlFor="itAllergY">Have allergies</Form.Label>
+								<Form.Label htmlFor="itAllergY">HAVE ALLERGIES?</Form.Label>
 							</div>
 							<div className='ms-auto'>
 								<Form.Check inline name="itAllerg" 
@@ -545,44 +489,45 @@ function Third(props) {
 									value="Yes"  
 									label="Yes" 
 									type='radio' 
-									checked={props.inPatient.itAllerg === 'Yes'}
-									onChange={props.handleChange}
+									checked={props.form.itAllerg === 'Yes'}
+									onChange={props.handleFormChange('itAllerg')}
 								/>
 								<Form.Check inline name="itAllerg" 
 									id="itAllergN" 
 									value="No"  
 									label="No" 
 									type='radio' 
-									checked={props.inPatient.itAllerg === 'No'}
-									onChange={props.handleChange}
-									disabled={props.inPatient.itAllergList.length > 0}
+									checked={props.form.itAllerg === 'No'}
+									onChange={props.handleFormChange('itAllerg')}
+									disabled={props.form.itAllergList.length > 0}
 								/>
 							</div>
 						</div>
 
 						<InputGroup className="mb-3">
 							<Form.Control style={{borderRight: "0"}} 
-								value={props.inPatient.itAllergInput}
+								value={props.form.itAllergInput}
 								name="itAllergInput" 
 								id="itAllergInput"
-								onChange={props.handleChange} 
-								disabled={props.inPatient.itAllerg !== "Yes"}	
+								
+								onChange={props.handleFormChange('itAllergInput')} 
+								disabled={props.form.itAllerg !== "Yes"}	
 							/>
 							<InputGroup.Text 
-								onClick={() => props.addAllergies(props.inPatient.itAllergInput)} 
+								onClick={() => props.addItemToList("itAllerg", "itAllergList", "itAllergInput")} 
 								style={{background: "none", borderLeft: "0"}}>
 								<PlusCircle />
 							</InputGroup.Text>
 						</InputGroup>
 						
 						<div className='mb-3'>
-							{props.inPatient.itAllergList.map((value, key) => (
+							{props.form.itAllergList.map((value, key) => (
 								
 								<div className='border rounded-pill d-inline-block p-3 pt-2 
 								pb-2 w-auto m-1 ms-0' key={key}>
 									<span className='text-break'>{value}</span>
 									<XCircleFill className='ms-1 text-danger fs-5' 
-										onClick={() => props.handleAllergDelete(value)}	
+										onClick={() => props.deleteItemFromList("itAllergList" ,value)}	
 									/>
 								</div>
 								
@@ -601,7 +546,7 @@ function Third(props) {
 					<Form.Group className='mb-3'>
 						<div className=' d-flex'>
 							<div className="me-auto">
-								<Form.Label htmlFor="itMedY">Currently taking medicaitons</Form.Label>
+								<Form.Label htmlFor="itMedY">TAKING MEDICATIONS?</Form.Label>
 							</div>
 							<div className='ms-auto'>
 								<Form.Check inline name="itMed" 
@@ -609,44 +554,44 @@ function Third(props) {
 									value="Yes"  
 									label="Yes" 
 									type='radio' 
-									checked={props.inPatient.itMed === 'Yes'}
-									onChange={props.handleChange}
+									checked={props.form.itMed === 'Yes'}
+									onChange={props.handleFormChange('itMed')}
 								/>
 								<Form.Check inline name="itMed" 
 									id="itMedN" 
 									value="No"  
 									label="No" 
 									type='radio' 
-									checked={props.inPatient.itMed === 'No'}
-									onChange={props.handleChange}
-									disabled={props.inPatient.itMedList.length > 0}
+									checked={props.form.itMed === 'No'}
+									onChange={props.handleFormChange('itMed')}
+									disabled={props.form.itMedList.length > 0}
 								/>
 							</div>
 						</div>
 
 						<InputGroup className="mb-3">
 							<Form.Control style={{borderRight: "0"}} 
-								value={props.inPatient.itMedInput}
+								value={props.form.itMedInput}
 								name="itMedInput" 
 								id="itMedInput"
-								onChange={props.handleChange} 
-								disabled={props.inPatient.itMed !== "Yes"}	
+								onChange={props.handleFormChange("itMedInput")} 
+								disabled={props.form.itMed !== "Yes"}	
 							/>
 							<InputGroup.Text 
-								onClick={() => props.addMedications(props.inPatient.itMedInput)} 
+								onClick={() => props.addItemToList("itMed", "itMedList", "itMedInput")} 
 								style={{background: "none", borderLeft: "0"}}>
 								<PlusCircle />
 							</InputGroup.Text>
 						</InputGroup>
 						
 						<div className='mb-3'>
-							{props.inPatient.itMedList.map((value, key) => (
+							{props.form.itMedList.map((value, key) => (
 								
 								<div className='border rounded-pill
 									d-inline-block p-3 pt-2 pb-2 w-auto m-1 ms-0' key={key}>
 									<span className='text-break'>{value}</span>
 									<XCircleFill className='ms-1 text-danger fs-5' 
-										onClick={() => props.handleMedDelete(value)}	
+										onClick={() => props.deleteItemFromList("itMedList" ,value)}		
 									/>
 								</div>
 								
@@ -658,7 +603,71 @@ function Third(props) {
 					
 				</Col>
 			</Row>
-			<Stats step={3} {...props} />
+
+			<Row>
+				<h5>CONDITIONS</h5>
+				<Col>
+					<Form.Group className='mb-3'>
+						<div className=' d-flex'>
+							<div className="me-auto">
+								<Form.Label htmlFor="itCondY">CURRENT HEALTH CONCERNS</Form.Label>
+							</div>
+							<div className='ms-auto'>
+								<Form.Check inline name="itCond" 
+									id="itCondY" 
+									value="Yes"  
+									label="Yes" 
+									type='radio' 
+									checked={props.form.itCond === 'Yes'}
+									onChange={props.handleFormChange("itCond")}
+								/>
+								<Form.Check inline name="itCond" 
+									id="itCondN" 
+									value="No"  
+									label="No" 
+									type='radio' 
+									checked={props.form.itCond === 'No'}
+									onChange={props.handleFormChange("itCond")}
+									disabled={props.form.itCondList.length > 0}
+								/>
+							</div>
+						</div>
+						
+						<InputGroup className="mb-3">
+							<Form.Control style={{borderRight: "0"}} 
+								value={props.form.itCondInput}
+								name="itCondInput" 
+								id="itCondInput"
+								onChange={props.handleFormChange("itCondInput")} 
+								disabled={props.form.itCond !== "Yes"}	
+							/>
+							<InputGroup.Text 
+								onClick={() => props.addItemToList("itCond", "itCondList", "itCondInput")}
+								style={{background: "none", borderLeft: "0"}}>
+								<PlusCircle />
+							</InputGroup.Text>
+						</InputGroup>
+						
+						<div className='mb-3'>
+							{props.form.itCondList.map((value, key) => (
+								
+								<div className='border rounded-pill
+									d-inline-block p-3 pt-2 pb-2 w-auto m-1 ms-0' key={key}>
+									<span className='text-break'>{value}</span>
+									<XCircleFill className='ms-1 text-danger fs-5' 
+										onClick={() => props.deleteItemFromList("itCondList" ,value)}
+									/>
+								</div>
+								
+								))
+							}
+						</div>
+
+					</Form.Group>
+					
+				</Col>
+			</Row>
+			<Stats step={3} {...props} nextStep={submit} />
 		</div>
 	)
 }

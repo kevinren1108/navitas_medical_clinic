@@ -6,27 +6,26 @@ import Header from './Layout/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SideBar from './Layout/Sidebar';
 import { Col, Container, Row } from 'react-bootstrap';
+import { store } from './Services/store';
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <Container fluid>
-      <Row className=''>
-        <Col xs={'2'} className='px-0 border-end '>
-          <SideBar />
-        </Col>
-        <Col className='px-0'>
-          <Header />
-          <App/>
-        </Col>
-
-      </Row>
-
-    </Container>
-
-
-
-  </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <Container fluid>
+                <Row className=''>
+                    <Col xs={'2'} className='px-0 border-end '>
+                        <SideBar />
+                    </Col>
+                    <Col className='px-0'>
+                        <Header />
+                        <App />
+                    </Col>
+                </Row>
+            </Container>
+        </BrowserRouter>
+    </Provider>
 );
 
 
