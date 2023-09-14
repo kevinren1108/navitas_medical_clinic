@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Envelope, PersonCircle, Search } from 'react-bootstrap-icons';
 import { Modal } from 'react-bootstrap';
+import PatientSearch from '../../Page/PatientSearch/Component/patientSearch';
 
 function Header() {
 
@@ -30,8 +31,8 @@ function Header() {
                             </InputGroup.Text>
                             <Form.Control
                                 // className='w-25'
-                                placeholder="First Name/Last Name/MRN"
-                                aria-label="First Name/Last Name/MRN"
+                                placeholder="First Name/Last Name/HCN"
+                                aria-label="First Name/Last Name/HCN"
                                 aria-describedby="search"
                                 id="search"
                                 name="search"
@@ -53,38 +54,10 @@ function Header() {
                 </Navbar.Collapse>
             </Container>
 
-            <Modal show={show} onHide={handleClose}>
-
-                <Modal.Title className='m-3 mb-0' >
-                    <InputGroup >
-                        <InputGroup.Text id="search" style={{background: "none", borderRight: "0"}}>
-                            <Search />  
-                        </InputGroup.Text>
-                        <Form.Control
-                            // className='w-25'
-                            placeholder="First Name/Last Name/MRN"
-                            aria-label="First Name/Last Name/MRN"
-                            aria-describedby="search"
-                            style={{borderLeft: "0"}}
-                        />
-                    </InputGroup>
-
-                </Modal.Title>
-
-
-                <Modal.Body>search result place holder</Modal.Body>
-
-
-
-
-                {/* redudent code */}
-                {/* <NavDropdown title="Patient" id="basic-nav-dropdown">
-                    <NavDropdown.Item>Patient</NavDropdown.Item>
-                    <NavDropdown.Item>Doctor</NavDropdown.Item>
-                    <NavDropdown.Item>Appointment</NavDropdown.Item>
-
-                </NavDropdown> */}
-
+            <Modal show={show} onClick={handleClose} onHide={handleClose}>
+                <Modal.Body>
+                    <PatientSearch />
+                </Modal.Body>
             </Modal>
 
         </Navbar>

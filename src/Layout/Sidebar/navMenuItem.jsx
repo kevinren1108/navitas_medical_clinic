@@ -19,7 +19,7 @@ function NavMenuItem(props) {
                 href={"/" + props.name}
             >
                 <SidebarMenu.Nav.Icon className=''>
-                    <Icon size={24} ></Icon>
+                    <Icon  style={{width: "1em", height: "21px" }} ></Icon>
                 </SidebarMenu.Nav.Icon>
                 <SidebarMenu.Nav.Title className='ps-3'>
                     {props.name.toUpperCase()}

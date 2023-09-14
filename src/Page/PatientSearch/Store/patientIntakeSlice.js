@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    value: 0,
     itAlert: "",
     // Form Complete date
     itDate: "",
@@ -30,7 +29,7 @@ const initialState = {
 }
 
 export const patientIntakeSlice = createSlice({
-    name: 'patientIntake',
+    name: 'patientIntakeForm',
     initialState,
     reducers: {
         updateField: (state, action) => {
