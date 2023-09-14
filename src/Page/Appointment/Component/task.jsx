@@ -2,13 +2,13 @@ import React from 'react'
 import { ListGroup, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleCategoryUpdate, handleTypeUpdate } from '../store/appointmentSlice';
+import AppointmentStats from './appointmentStats';
 
 
-function Task() {
+function Task(props) {
 
     const dispatch = useDispatch();
     const appointmentInfo = useSelector((state) => state.appointment)
-    console.log(appointmentInfo)
     const appointmentType = {
         "General": ["General Appointment", "General Appointment - Pharmacist"],
         "Mental": ["Mental Health", "Nutrition Consult", "Weight Loss Consult"],
@@ -21,10 +21,17 @@ function Task() {
 
     const appointmentCategory = Object.keys(appointmentType)
 
+    const handleNextStep = (e) => {
+        // console.log(e)
+        dispatch(handleTypeUpdate(e))
+        props.nextStep();
+        
+    };
+
     return (
         <div className='flex border p-5 m-5'>
 
-            <Row>
+            <Row className='mb-3'>
                 <Col sm={4}>
                     Choose a Category
                     <ListGroup>
@@ -45,7 +52,7 @@ function Task() {
                         {appointmentType[appointmentInfo.appointmentCategory].map((value, key) => (
                             <ListGroup.Item 
                                 action key={key} variant="secondary"
-                                onClick={() => dispatch(handleTypeUpdate(value))}
+                                onClick={() => handleNextStep(value)}
                             >
                                 {value}
                             </ListGroup.Item>
@@ -55,7 +62,7 @@ function Task() {
                     </ListGroup>
                 </Col>
             </Row>
-
+            <AppointmentStats  step={1} {...props} />
         </div>
     )
 }

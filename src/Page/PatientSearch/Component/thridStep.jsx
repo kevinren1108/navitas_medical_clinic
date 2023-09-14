@@ -1,7 +1,7 @@
 import React from 'react'
 import {  Col, Form, Row, InputGroup } from 'react-bootstrap'
 import { PlusCircle, XCircleFill } from 'react-bootstrap-icons'
-import Stats from './stats'
+import IntakeStats from './intakeStats'
 
 function ThirdStep(props) {
 
@@ -244,7 +244,7 @@ function ThirdStep(props) {
 					
 				</Col>
 			</Row>
-			<Stats step={3} {...props} nextStep={submit} />
+			<IntakeStats step={3} {...props} nextStep={submit} />
 		</div>
 	)
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import {  Col, Form, Row } from 'react-bootstrap'
-import Stats from './stats';
+import IntakeStats from './intakeStats';
 
 function FirstStep(props) {
 
@@ -169,7 +169,7 @@ function FirstStep(props) {
 				</Col>
 			</Row>
 		
-			<Stats step={1} {...props} nextStep={validate} />
+			<IntakeStats step={1} {...props} nextStep={validate} />
 		</div>
 	)
 }

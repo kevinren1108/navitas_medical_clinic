@@ -4,7 +4,7 @@ import PatientSel from '../Patient/Component/patientSel'
 import PatientIntakeForm from '../PatientSearch/Component/patientIntakeForm'
 import PatientSearch from '../PatientSearch/Component/patientSearch';
 import { useSelector } from 'react-redux';
-import Task from './Component/task';
+import AppointmentStep from './Component/appointmentStep';
 
 
 
@@ -23,7 +23,7 @@ function Appointment() {
                     {uiState.uiToDisplay ==="create" ? <PatientIntakeForm /> : <></> }
                 </Col>
                 <Col className='border p-4'>
-                    <Task />
+                    <AppointmentStep />
                 </Col>
 
             </Row>

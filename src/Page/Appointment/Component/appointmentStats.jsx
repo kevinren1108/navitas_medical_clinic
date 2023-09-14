@@ -1,16 +1,10 @@
 import React from 'react'
 import {  Button } from 'react-bootstrap'
-import { useDispatch } from 'react-redux';
-import { handleUIChange } from '../Store/appointmentUISlice';
 
-function Stats ({ nextStep, previousStep, totalSteps, step }) {
-	const dispatch = useDispatch()
+function AppointmentStats ({ nextStep, previousStep, totalSteps, step }) {
+
 	return (
 		<div className="d-flex justify-content-center ">
-		{step === 1 ?
-			<Button className='btn btn-secondary btn-block me-auto' onClick={() => {dispatch(handleUIChange("search"))}}>Back to Search</Button>
-			:<></>
-		}
 		{step > 1 &&
 			<Button className='btn btn-secondary btn-block' onClick={previousStep}>Go Back</Button>
 		}
@@ -24,4 +18,4 @@ function Stats ({ nextStep, previousStep, totalSteps, step }) {
 
 }
 
-export default Stats
+export default AppointmentStats

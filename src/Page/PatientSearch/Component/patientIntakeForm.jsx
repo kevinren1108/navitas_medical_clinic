@@ -1,4 +1,4 @@
-import React from 'react'
+ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import StepWizard from 'react-step-wizard';
 import { updateField, handleSamePhyscalAndMail, 
@@ -52,7 +52,7 @@ function PatientIntakeForm() {
 
 			<StepWizard
 				isLazyMount={true}
-				isHashEnabled
+				isHashEnabled={false}
 				// transitions={custom}
 				// nav={<Nav />}
 			>
