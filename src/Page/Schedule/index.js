@@ -2,7 +2,7 @@ import React from 'react'
 import ScheduleView from './Component/scheduleView'
 import { useSelector } from 'react-redux'
 import DateDetail from './Component/dateDetail'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 
 
 function Schedule() {
@@ -10,28 +10,8 @@ function Schedule() {
 
     return (
 
-        <Container fluid className='' style={{ height: "calc(100% - 57px)" }}>
-            <Row className='h-100'>
-                {scheduleUIInfo.displayDateDetail ? 
-                    <>
-                        <Col className='col-8 border'>
-                            <ScheduleView />
-                        </Col>
-                        <Col className='border p-4'>
-                            <DateDetail />
-                        </Col>
-                    </> 
-                    :
-                    <>
-                        <Col >
-                            <ScheduleView />
-                        </Col>
-                        </>
-                    }
-
-
-
-            </Row>
+        <Container fluid className=''>
+            {scheduleUIInfo.displayDateDetail ? <DateDetail /> :<ScheduleView />}
         </Container>
 
     )

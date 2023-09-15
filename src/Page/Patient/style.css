@@ -1,8 +1,42 @@
-.timeLineChart {
+/* // Large devices (desktops, less than 1200px) */
+@media (min-width: 1199px) { 
+    .timeLineChart {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 23%;
+    }
+}
+
+/* // Large devices (desktops, less than 1200px) */
+ @media (max-width: 1199px) { 
+    .timeLineChart {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 33%;
+    }
+}
+
+ /* // Medium devices (tablets, less than 992px) */
+ @media (max-width: 991px) { .timeLineChart {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: 21%;
-}
+    grid-auto-columns: 43%;
+} }
+
+ /* // Small devices (landscape phones, less than 768px) */
+ @media (max-width: 767px) { .timeLineChart {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 58%;
+} }
+
+ /* // Extra small devices (portrait phones, less than 576px) */
+ @media (max-width: 575px) { .timeLineChart {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 80%;
+} }
+
 
 .timeLineChart::-webkit-scrollbar{
     height: 15px;

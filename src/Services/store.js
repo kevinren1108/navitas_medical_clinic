@@ -4,6 +4,7 @@ import appointmentUIReducer from '../Page/PatientSearch/Store/appointmentUISlice
 import appointmentReducer  from '../Page/Appointment/store/appointmentSlice'
 import patientReducer from "../Page/Patient/store/patientSlice"
 import scheduleUIReducer from '../Page/Schedule/store/scheduleUISlice'
+import headerUIReducer from "../Layout/Header/store/headerUISlice"
 import { patientApi } from './patient'
 import { setupListeners } from '@reduxjs/toolkit/dist/query'
 
@@ -15,6 +16,7 @@ export const store = configureStore({
         appointment: appointmentReducer,
         patient: patientReducer,
         scheduleUI: scheduleUIReducer,
+        headerUI: headerUIReducer,
         [patientApi.reducerPath]: patientApi.reducer,
     },
     middleware: (getDefaultMiddleware) => 

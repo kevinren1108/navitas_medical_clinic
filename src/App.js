@@ -1,7 +1,10 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Patient from "./Page/Patient";
 import Appointment from "./Page/Appointment";
 import Schedule from "./Page/Schedule";
+import Home from "./Page/Home";
+import { Container } from "react-bootstrap";
+import DateDetail from "./Page/Schedule/Component/dateDetail";
 
 export default function App() {
   return (
@@ -9,29 +12,20 @@ export default function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/patient" element={<Patient />} />
-        <Route path="/appointment" element={<Appointment />} />
-        <Route path="/schedule" element={<Schedule />} />
+        <Route path="/appointment" element={<Schedule />} />
+        <Route path="/newbooking" element={<Appointment />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     
   );
 }
 
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-    </div>
-  );
-}
 
 function NoMatch() {
   return (
-    <div>
-      <h2>Nothing to see here!</h2>
-      <p>
-        <Link to="/">Go to the home page</Link>
-      </p>
-    </div>
+    <Container className="d-flex justify-content-center pt-2">
+      <h2 >Nothing to see here!</h2>
+      
+    </Container>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import PatientSel from './Component/patientSel'
 import HealthTimeline from './Component/healthTimeline'
 import EncounterDeatil from './Component/encounterDetail'
@@ -12,19 +12,12 @@ function Patient() {
     const uiState = useSelector((state) => state.appointmentUI)
 
     return (
-        <Container fluid className='' style={{ height: "calc(100% - 57px)" }}>
-            <Row className='h-100'>
-                <Col className='col-3 border'>
-                    {uiState.uiToDisplay === "selected" ? <PatientSel /> : <></>}
-                    {uiState.uiToDisplay === "search" ? <PatientSearch /> : <></>}
-                    {uiState.uiToDisplay === "create" ? <PatientIntakeForm /> : <></>}
-                </Col>
-                <Col className='border p-4'>
-                    <HealthTimeline />
-                    <EncounterDeatil />
-                </Col>
-
-            </Row>
+        <Container fluid className=''>
+            {uiState.uiToDisplay === "selected" ? <PatientSel /> : <></>}
+            {uiState.uiToDisplay === "search" ? <PatientSearch /> : <></>}
+            {uiState.uiToDisplay === "create" ? <PatientIntakeForm /> : <></>}
+            {uiState.uiToDisplay === "selected" ? <HealthTimeline /> : <></>}
+            {uiState.uiToDisplay === "selected" ? <EncounterDeatil /> : <></>}
         </Container>
     )
 }

@@ -1,0 +1,32 @@
+
+/* // Small devices (landscape phones, less than 768px) */
+@media (max-width: 767px) { 
+  .cell{
+    font-size: 9px;
+  }
+
+  .timeBtn{
+    font-size: 9px !important;
+    width: 1rem;
+  }
+
+  .timeRow{
+    overflow: scroll;
+  }
+}
+
+/* // Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) {
+  .cell{
+    font-size: 9px;
+  }
+
+  .timeBtn{
+    font-size: 9px !important;
+    width: 1rem;
+  }
+
+  .timeRow{
+    overflow: scroll;
+  }
+}

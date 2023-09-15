@@ -1,111 +1,75 @@
 import React, { useState } from 'react'
-import { Alert, Badge, Calendar } from 'antd';
+import { Calendar } from 'antd';
 import dayjs from 'dayjs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { handleDateChange, handleDisplayChange } from '../store/scheduleUISlice';
+import { Container } from 'react-bootstrap';
+import "../style.css"
 
 function ScheduleView() {
     const dispatch = useDispatch()
-    const appointmentInfo = useSelector((state) => (state.appointment))
-    const getListData = (value) => {
-        let listData;
-
-        switch (value.date()) {
-            case 8:
-                listData = [
-                    {
-                        type: 'warning',
-                        content: 'This is warning event.',
-                    },
-                    {
-                        type: 'success',
-                        content: 'This is usual event.',
-                    },
-                ];
-                break;
-            case 10:
-                listData = [
-                    {
-                        type: 'warning',
-                        content: 'This is warning event.',
-                    },
-                    {
-                        type: 'success',
-                        content: 'This is usual event.',
-                    },
-                    {
-                        type: 'error',
-                        content: 'This is error event.',
-                    },
-                ];
-                break;
-            case 15:
-                listData = [
-                    {
-                        type: 'warning',
-                        content: 'This is warning event',
-                    },
-                    {
-                        type: 'success',
-                        content: 'This is very long usual event......',
-                    },
-                    {
-                        type: 'error',
-                        content: 'This is error event 1.',
-                    },
-                    {
-                        type: 'error',
-                        content: 'This is error event 2.',
-                    },
-                    {
-                        type: 'error',
-                        content: 'This is error event 3.',
-                    },
-                    {
-                        type: 'error',
-                        content: 'This is error event 4.',
-                    },
-                ];
-                break;
-            default:
-        }
-        return listData || [];
-    };
+   
     const [value, setValue] = useState(() => dayjs(new Date()));
-    const [selectedValue, setSelectedValue] = useState(() => dayjs(new Date()));
+    
     const onSelect = (newValue) => {
         setValue(newValue);
-        setSelectedValue(newValue);
+        
         dispatch(handleDisplayChange(true))
         dispatch(handleDateChange(newValue.format('M/DD/YYYY')))
     };
     const onPanelChange = (newValue) => {
         setValue(newValue);
     };
+
     const getMonthData = (value) => {
-        if (value.month() === 8) {
-            return 1394;
-        }
+        return Math.floor(Math.random() * 500) + 400;
     };
+
+    const getListData = (value) => {
+        const listData = [29, 18, 32, 15, 35, 23, 27, 19, 14, 12, 33, 30, 38, 22, 11, 17, 28, 36, 24, 34, 20, 16, 10, 25, 31, 37, 40, 26, 21, 13, 39]
+
+        return listData[value.date()]
+    };
+
+    const getDayData = (value) => {
+
+        const count = getListData(value)
+        let status = ""
+        let textColor = ""
+        if (count < 10) {
+            status = "IDLE"
+            textColor = "#79addc"
+        } else if (10 < count && count < 20) {
+            status = "IDLE"
+            textColor = "#79addc"
+        } else if (20 < count && count < 30) {
+            status = "BUSY"
+            textColor = "#ffc09f"
+        } else if (30 < count < 40) {
+            status = "FULL"
+            textColor = "#ffc09f"
+        } return { status, textColor }
+    };
+
     const monthCellRender = (value) => {
         const num = getMonthData(value);
         return num ? (
             <div className="notes-month">
                 <section>{num}</section>
-                <span>Backlog number</span>
+                <span>Appointments</span>
             </div>
         ) : null;
     };
+
     const dateCellRender = (value) => {
-        const listData = getListData(value);
+        const { status, textColor } = getDayData(value);
         return (
-            <ul className="events">
-                {listData.map((item) => (
-                    <li key={item.content}>
-                        <Badge status={item.type} text={item.content} />
-                    </li>
-                ))}
-            </ul>
+            <div className=' position-relative '>
+                <div className=' cell position-absolute top-0 end-0' style={{ color: textColor }}>
+                    {status}
+                </div>
+            </div>
+
         );
     };
     const cellRender = (current, info) => {
@@ -116,9 +80,10 @@ function ScheduleView() {
 
 
     return (
-        <div className='p-5'>
+        <Container>
             <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} cellRender={cellRender} />
-        </div>
+        </Container>
+
 
     )
 }
