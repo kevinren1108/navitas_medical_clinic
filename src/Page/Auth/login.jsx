@@ -4,7 +4,7 @@ import { useAuth } from '../../Routes/authProvider'
 import { ExclamationCircle } from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleAuthAlertDelete, handleAuthAlertPush } from './store/authSlice';
-// handleAuthAlertDelete, handleAuthAlertPush
+
 function Login() {
     const { login } = useAuth();
 
@@ -33,7 +33,6 @@ function Login() {
     }
 
     const handleSubmit = () => {
-
         login({
             username: username,
             password: password,

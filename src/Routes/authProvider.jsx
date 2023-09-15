@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
 import { useDispatch } from "react-redux";
 import { handleAuthAlertPush } from "../Page/Auth/store/authSlice";
+import { v4 as uuidv4 } from 'uuid';
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -14,10 +16,14 @@ export const AuthProvider = ({ children }) => {
     const login = async (data) => {
         if(data.username && data.password){
             if(data.username === "admin" && data.password === "navitas"){
+                delete data.password
+                data.token = uuidv4();
                 data.admin = true
                 setUser(data);
                 navigate("/");
             }else if (data.username === "employee" && data.password === "navitas"){
+                delete data.password
+                data.token = uuidv4();
                 data.admin = false
                 setUser(data);
                 navigate("/");

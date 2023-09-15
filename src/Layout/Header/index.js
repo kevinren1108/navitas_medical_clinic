@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -17,10 +17,17 @@ function Header() {
     const { logout } = useAuth();
 
     // eslint-disable-next-line
-    const [user, setUser] = useState( () => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        return user || "";
-    });
+    const [localStorageData, setLocalStorageData] = useState(null);
+
+    useEffect(() => {
+        // Fetch data from local storage when the component mounts
+        const dataFromLocalStorage = localStorage.getItem('user');
+
+        if (dataFromLocalStorage) {
+        // If data exists in local storage, parse it and set it in state
+        setLocalStorageData(JSON.parse(dataFromLocalStorage));
+        }
+    }, []);
 
     
 
@@ -50,7 +57,7 @@ function Header() {
                                 <Nav.Link> <Envelope /></Nav.Link>
                                 <Nav.Link> <PersonCircle /></Nav.Link>
 
-                                <NavDropdown title={"Welcome, " + user.username} id="collapsible-nav-dropdown">
+                                <NavDropdown title={localStorageData? 'Welcome, ' +localStorageData.username.toUpperCase() : "Welcome"} id="collapsible-nav-dropdown">
                                     <NavDropdown.Item>Account</NavDropdown.Item>
                                     <NavDropdown.Item onClick={() => logout()} >Log out</NavDropdown.Item>
                                 </NavDropdown>
