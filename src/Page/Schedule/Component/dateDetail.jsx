@@ -11,8 +11,8 @@ function DateDetail() {
     const provider = Object.keys(appointmentInfo.providerList)
     const [displayStatus, setDisplayStatus] = useState(false)
     const timeSlot = ["9:00-9:45", "10:00-10:45", "11:00-11:45", "13:00-13:45", "14:00-14:45", "15:00-15:45", "16:00-16:45",]
-    
-    const [date, setValue] = useState(() => dayjs(new Date()));
+
+    const date = dayjs().format('M/DD/YYYY')
 
     const [displayDetail, setDisplayDetail] = useState({
         avaliable: "",
@@ -21,11 +21,10 @@ function DateDetail() {
     })
 
     useEffect(() => {
-        if(scheduleUIInfo.selectedDate === ""){
-            const date = dayjs().format('M/DD/YYYY') 
+        if (scheduleUIInfo.selectedDate === "") {
             dispatch(handleDateChange(date))
         }
-    }, [])
+    }, )
 
     function handleDisplayDetail(newState, timeSlotIndex, providerName) {
         const timeSlotForProvider = appointmentInfo["providerList"][providerName]["booked"][scheduleUIInfo.selectedDate]
@@ -51,55 +50,59 @@ function DateDetail() {
             <div>
                 <div >
                     <Alert className='d-flex justify-content-between'>
-                        <span className='align-self-center'>{scheduleUIInfo.selectedDate}</span> 
-                        <Button onClick={() => dispatch(handleDisplayChange(false))} >Go Back</Button> 
+                        <span className='align-self-center'>{scheduleUIInfo.selectedDate === date ? "Today" : scheduleUIInfo.selectedDate}'s Appointment</span>
+                        <Button onClick={() => dispatch(handleDisplayChange(false))} >Monthly View</Button>
                     </Alert>
 
                 </div>
                 {displayStatus === true ? displayDetail.avaliable ?
                     <div className='border rounded p-1 ps-3 mb-3' >
-                        <Row className='d-flex'>
-                            <Col sm={4} className='me-auto'>
-                                <div className='text-secondary fs-6 fw-light'>Category:</div>
-                                <div className='text-secondary fs-6 fw-light'>Type:</div>
-                                <div className='text-secondary fs-6 fw-light'>Provider:</div>
-                                <div className='text-secondary fs-6 fw-light'>Date:</div >
-                                <div className='text-secondary fs-6 fw-light'>Time:</div >
+                        <section className=' pt-2 fw-bold'>Appointment Detail</section>
+                        <hr />
+                        <Row className=''>
+                            <Col  className='me-auto'>
+                                <div className='text-secondary fs-6 fw-light text-wrap'>Category:</div>
+                                <div className='text-secondary fs-6 fw-light text-wrap'>Type:</div>
+                                <div className='text-secondary fs-6 fw-light text-wrap'>Provider:</div>
+                                <div className='text-secondary fs-6 fw-light text-wrap'>Date:</div >
+                                <div className='text-secondary fs-6 fw-light text-wrap'>Time:</div >
 
                             </Col>
-                            <Col sm={5} className='ms-auto'>
-                                <div className='text-secondary fs-6 fw-light'>Requisitions</div >
-                                <div className='text-secondary fs-6 fw-light'>Review My Lab Result</div >
-                                <div className='text-secondary fs-6 fw-light'>{displayDetail.providerName}</div >
-                                <div className='text-secondary fs-6 fw-light'>{scheduleUIInfo.selectedDate}</div >
-                                <div className='text-secondary fs-6 fw-light'>{timeSlot[displayDetail.timeSlotIndex]}</div>
+                            <Col  className='ms-auto'>
+                                <div className='text-secondary fs-6 fw-light text-wrap'>Requisitions</div >
+                                <div className='text-secondary fs-6 fw-light text-wrap'>Review My Lab Result</div >
+                                <div className='text-secondary fs-6 fw-light text-wrap'>{displayDetail.providerName}</div >
+                                <div className='text-secondary fs-6 fw-light text-wrap'>{scheduleUIInfo.selectedDate}</div >
+                                <div className='text-secondary fs-6 fw-light text-wrap'>{timeSlot[displayDetail.timeSlotIndex]}</div>
                             </Col>
                         </Row>
                         <hr />
-                        <Row className='d-flex'>
-                            <Col sm={4} className='me-auto'>
+                        <Row className=''>
+                            <Col className='me-auto'>
                                 <div className='text-secondary fs-6 fw-light'>Patient:</div>
                                 <div className='text-secondary fs-6 fw-light'>HCN:</div>
                                 <div className='text-secondary fs-6 fw-light'>HCN Issuer:</div >
 
 
                             </Col>
-                            <Col sm={5} className='ms-auto'>
+                            <Col className='ms-auto'>
                                 <div className='text-secondary fs-6 fw-light'>Kameron Bosco</div >
                                 <div className='text-secondary fs-6 fw-light'>046034894</div >
                                 <div className='text-secondary fs-6 fw-light'>Illinois</div >
 
                             </Col>
                         </Row>
+
+                        
                     </div> :
 
                     <Alert className='d-flex justify-content-between'>
-                        <span className='align-self-center'>TIME SLOT AVAILABLE</span> 
-                        <Button href='./appointment' >BOOK NOW</Button>
+                        <span className='align-self-center'>TIME SLOT AVAILABLE</span>
+                        <Button href='./newbooking' >BOOK NOW</Button>
                     </Alert>
-                     : <></>}
+                    : <></>}
                 <div>
-
+                
 
                     {/* render each privider row */}
                     {provider.map((providerName, providerKey) => {

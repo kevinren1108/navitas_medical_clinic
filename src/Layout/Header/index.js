@@ -42,7 +42,6 @@ function Header() {
                     </Nav>
                 </Navbar.Collapse>
             </Container>
-            {console.log(location.pathname)}
 
             <Modal show={show} onClick={handleClose} onHide={handleClose}>
                 <Modal.Body>

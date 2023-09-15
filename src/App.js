@@ -4,7 +4,6 @@ import Appointment from "./Page/Appointment";
 import Schedule from "./Page/Schedule";
 import Home from "./Page/Home";
 import { Container } from "react-bootstrap";
-import DateDetail from "./Page/Schedule/Component/dateDetail";
 
 export default function App() {
   return (

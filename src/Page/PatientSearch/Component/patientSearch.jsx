@@ -15,7 +15,7 @@ function PatientSearch() {
     const AlogliaSearchResult = (props) => {
         const { hits } = useHits(props);
         return (
-            <Container>
+           
                 <ListGroup className=''>
                     {hits.length === 0 ?
                         <ListGroup.Item action variant='success'
@@ -36,7 +36,8 @@ function PatientSearch() {
                     }
 
                     {hits.map((hit, key) => (
-                        <ListGroup.Item action variant='primary'
+                        <ListGroup.Item action variant='light'
+                            className='mt-1 border-top'
                             key={key}
                             onClick={() => { dispatch(handlePatientSelection(hit.id)) }}
                         >
@@ -53,7 +54,7 @@ function PatientSearch() {
                     ))
                     }
                 </ListGroup>
-            </Container>
+            
 
         );
     }
@@ -72,7 +73,7 @@ function PatientSearch() {
         }
 
         return (
-            <Container>
+            
                 <Form
                     action="" role="search" noValidate
                     onSubmit={(event) => {
@@ -113,7 +114,7 @@ function PatientSearch() {
                     </div>
 
                 </Form>
-            </Container>
+            
 
         );
     }

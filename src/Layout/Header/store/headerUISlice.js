@@ -10,7 +10,6 @@ export const headerUISlice = createSlice({
     initialState,
     reducers:{
         handleShowUpdate: (state, action) => {
-            console.log(action)
             state["show"] = action.payload
         }
     },

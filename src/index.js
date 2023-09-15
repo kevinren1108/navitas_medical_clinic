@@ -17,13 +17,10 @@ root.render(
         <Provider store={store}>
             <BrowserRouter>
                 <Container fluid>
-                    <Row className=''>
-                        {/* <Col xs={'2'} className='px-0 border-end '>
-                            <SideBar />
-                        </Col> */}
+                    <Row className=''>    
                         <Col className='px-0'>
                             <Header />
-                            <App />
+                            <App />           
                         </Col>
                     </Row>
                 </Container>

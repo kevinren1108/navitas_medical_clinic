@@ -74,14 +74,14 @@ function HealthTimeline() {
                                 Health Consolation
                             </div>
                         </div>
-                        <p className='pt-3 border-top' >2020-11-03</p>
+                        <p className='pt-3 border-top' >11/03/2020</p>
                     </div>
 
-                    <HistoryTest />
-                    <HistoryTest />
-                    <HistoryTest />
-                    <HistoryTest />
-                    <HistoryTest />
+                    <HistoryTest index="5" date="3/13/2021"/>
+                    <HistoryTest index="3" date="9/28/2021"/>
+                    <HistoryTest index="6" date="1/18/2022"/>
+                    <HistoryTest index="1"date="4/13/2022"/>
+                    <HistoryTest index="7" date="11/5/2022"/>
 
                 </div>
             </div>

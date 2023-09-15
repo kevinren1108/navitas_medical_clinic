@@ -1,0 +1,33 @@
+@media (min-width: 1199px) {
+    .docCard {
+        width: calc(100vw/10);
+    }
+}
+
+/* // Large devices (desktops, less than 1200px) */
+@media (max-width: 1199px) {
+    .docCard {
+        width: calc(100vw/7);
+    }
+}
+
+/* // Medium devices (tablets, less than 992px) */
+@media (max-width: 991px) {
+    .docCard {
+        width: calc(100vw/7);
+    }
+}
+
+/* // Small devices (landscape phones, less than 768px) */
+@media (max-width: 767px) {
+    .docCard {
+        width: calc(100vw/3);
+    }
+}
+
+/* // Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) {
+    .docCard {
+        width: 88vw;
+    }
+}

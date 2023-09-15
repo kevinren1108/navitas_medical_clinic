@@ -1,5 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+function generateUniqueRandomArray(start, end, count) {
+    const array = [];
+    while (array.length < count) {
+      const randomNumber = Math.floor(Math.random() * (end - start + 1)) + start;
+      if (!array.includes(randomNumber)) {
+        array.push(randomNumber);
+      }
+    }
+    return array;
+}
+
 const initialState = {
     appointmentAlert: [],
     appointmentCategory: "General",
@@ -13,10 +24,21 @@ const initialState = {
             lastName: "Rai",
             advanced: ["General", "Mental"],
             booked: {
-                "9/18/2023": [1, 4, 5], "9/19/2023": [1, 2, 3, 4, 6],
-                "9/20/2023": [1, 5, 6], "9/21/2023": [0, 2, 3, 5, 6],
-                "9/22/2023": [1, 2, 3, 6], "9/23/2023": [2, 3, 6],
-                "9/24/2023": [1], "9/25/2023": [0, 2, 3],
+                "8/27/2023": generateUniqueRandomArray(0,6,4) , "8/28/2023": generateUniqueRandomArray(0,6,3),   
+                "8/29/2023": generateUniqueRandomArray(0,6,4) , "8/30/2023": generateUniqueRandomArray(0,6,2), 
+                "8/31/2023": generateUniqueRandomArray(0,6,3) , "9/01/2023": generateUniqueRandomArray(0,6,1), 
+                "9/02/2023": generateUniqueRandomArray(0,6,1) , "9/03/2023": generateUniqueRandomArray(0,6,3), 
+                "9/04/2023": generateUniqueRandomArray(0,6,2) , "9/05/2023": generateUniqueRandomArray(0,6,5),
+                "9/06/2023": generateUniqueRandomArray(0,6,5) , "9/07/2023": generateUniqueRandomArray(0,6,4), 
+                "9/08/2023": generateUniqueRandomArray(0,6,3) , "9/09/2023": generateUniqueRandomArray(0,6,6), 
+                "9/10/2023": generateUniqueRandomArray(0,6,4) , "9/11/2023": generateUniqueRandomArray(0,6,4),
+                "9/12/2023": generateUniqueRandomArray(0,6,1) , "9/13/2023": generateUniqueRandomArray(0,6,4), 
+                "9/14/2023": generateUniqueRandomArray(0,6,4) , "9/15/2023": generateUniqueRandomArray(0,6,4), 
+                "9/16/2023": generateUniqueRandomArray(0,6,4) , "9/17/2023": generateUniqueRandomArray(0,6,3),
+                "9/18/2023": generateUniqueRandomArray(0,6,2) , "9/19/2023": generateUniqueRandomArray(0,6,4), 
+                "9/20/2023": generateUniqueRandomArray(0,6,3) , "9/21/2023": generateUniqueRandomArray(0,6,1), 
+                "9/22/2023": generateUniqueRandomArray(0,6,4) , "9/23/2023": generateUniqueRandomArray(0,6,4),
+                "9/24/2023": generateUniqueRandomArray(0,6,5) , "9/25/2023": generateUniqueRandomArray(0,6,2),
             }
         },
         "Dr. Daniel Pannozzo": {
@@ -24,10 +46,21 @@ const initialState = {
             lastName: "Pannozzo",
             advanced: ["Specialist/ Other", "Prescriptions"],
             booked: {
-                "9/18/2023": [0, 1, 2, 4], "9/19/2023": [1, 4, 6],
-                "9/20/2023": [0, 1, 2, 6], "9/21/2023": [0, 2, 3, 5],
-                "9/22/2023": [1, 2, 3, 4, 6], "9/23/2023": [0, 2, 3, 6],
-                "9/24/2023": [1, 2, 3], "9/25/2023": [0, 2, 3, 4],
+                "8/27/2023": generateUniqueRandomArray(0,6,4) , "8/28/2023": generateUniqueRandomArray(0,6,3),   
+                "8/29/2023": generateUniqueRandomArray(0,6,4) , "8/30/2023": generateUniqueRandomArray(0,6,2), 
+                "8/31/2023": generateUniqueRandomArray(0,6,3) , "9/01/2023": generateUniqueRandomArray(0,6,1), 
+                "9/02/2023": generateUniqueRandomArray(0,6,1) , "9/03/2023": generateUniqueRandomArray(0,6,3), 
+                "9/04/2023": generateUniqueRandomArray(0,6,2) , "9/05/2023": generateUniqueRandomArray(0,6,5),
+                "9/06/2023": generateUniqueRandomArray(0,6,5) , "9/07/2023": generateUniqueRandomArray(0,6,4), 
+                "9/08/2023": generateUniqueRandomArray(0,6,3) , "9/09/2023": generateUniqueRandomArray(0,6,6), 
+                "9/10/2023": generateUniqueRandomArray(0,6,4) , "9/11/2023": generateUniqueRandomArray(0,6,4),
+                "9/12/2023": generateUniqueRandomArray(0,6,1) , "9/13/2023": generateUniqueRandomArray(0,6,4), 
+                "9/14/2023": generateUniqueRandomArray(0,6,4) , "9/15/2023": generateUniqueRandomArray(0,6,4), 
+                "9/16/2023": generateUniqueRandomArray(0,6,4) , "9/17/2023": generateUniqueRandomArray(0,6,3),
+                "9/18/2023": generateUniqueRandomArray(0,6,2) , "9/19/2023": generateUniqueRandomArray(0,6,4), 
+                "9/20/2023": generateUniqueRandomArray(0,6,3) , "9/21/2023": generateUniqueRandomArray(0,6,1), 
+                "9/22/2023": generateUniqueRandomArray(0,6,4) , "9/23/2023": generateUniqueRandomArray(0,6,4),
+                "9/24/2023": generateUniqueRandomArray(0,6,5) , "9/25/2023": generateUniqueRandomArray(0,6,2),
             }
         },
         "Dr. Imran Mushtaq": {
@@ -35,10 +68,21 @@ const initialState = {
             lastName: "Mushtaq",
             advanced: ["Requisitions", "Skin"],
             booked: {
-                "9/18/2023": [0, 1, 2, 6], "9/19/2023": [1, 6],
-                "9/20/2023": [1, 6], "9/21/2023": [0, 1, 2, 6],
-                "9/22/2023": [0, 1, 2, 4, 6], "9/23/2023": [2, 3, 6],
-                "9/24/2023": [1], "9/25/2023": [0, 3],
+                "8/27/2023": generateUniqueRandomArray(0,6,4) , "8/28/2023": generateUniqueRandomArray(0,6,3),   
+                "8/29/2023": generateUniqueRandomArray(0,6,4) , "8/30/2023": generateUniqueRandomArray(0,6,2), 
+                "8/31/2023": generateUniqueRandomArray(0,6,3) , "9/01/2023": generateUniqueRandomArray(0,6,1), 
+                "9/02/2023": generateUniqueRandomArray(0,6,1) , "9/03/2023": generateUniqueRandomArray(0,6,3), 
+                "9/04/2023": generateUniqueRandomArray(0,6,2) , "9/05/2023": generateUniqueRandomArray(0,6,5),
+                "9/06/2023": generateUniqueRandomArray(0,6,5) , "9/07/2023": generateUniqueRandomArray(0,6,4), 
+                "9/08/2023": generateUniqueRandomArray(0,6,3) , "9/09/2023": generateUniqueRandomArray(0,6,6), 
+                "9/10/2023": generateUniqueRandomArray(0,6,4) , "9/11/2023": generateUniqueRandomArray(0,6,4),
+                "9/12/2023": generateUniqueRandomArray(0,6,1) , "9/13/2023": generateUniqueRandomArray(0,6,4), 
+                "9/14/2023": generateUniqueRandomArray(0,6,4) , "9/15/2023": generateUniqueRandomArray(0,6,4), 
+                "9/16/2023": generateUniqueRandomArray(0,6,4) , "9/17/2023": generateUniqueRandomArray(0,6,3),
+                "9/18/2023": generateUniqueRandomArray(0,6,2) , "9/19/2023": generateUniqueRandomArray(0,6,4), 
+                "9/20/2023": generateUniqueRandomArray(0,6,3) , "9/21/2023": generateUniqueRandomArray(0,6,1), 
+                "9/22/2023": generateUniqueRandomArray(0,6,4) , "9/23/2023": generateUniqueRandomArray(0,6,4),
+                "9/24/2023": generateUniqueRandomArray(0,6,5) , "9/25/2023": generateUniqueRandomArray(0,6,2),
             }
         },
         "Dr. Chelsie Velikovsky": {
@@ -46,10 +90,21 @@ const initialState = {
             lastName: "Velikovsky",
             advanced: ["General", "Skin"],
             booked: {
-                "9/18/2023": [0, 1, 2, 4, 5, 6], "9/19/2023": [1, 4, 6],
-                "9/20/2023": [0, 2, 6], "9/21/2023": [0, 5],
-                "9/22/2023": [1, 6], "9/23/2023": [0, 3, 6],
-                "9/24/2023": [1, 2, 3], "9/25/2023": [0, 2, 3, 4],
+                "8/27/2023": generateUniqueRandomArray(0,6,4) , "8/28/2023": generateUniqueRandomArray(0,6,3),   
+                "8/29/2023": generateUniqueRandomArray(0,6,4) , "8/30/2023": generateUniqueRandomArray(0,6,2), 
+                "8/31/2023": generateUniqueRandomArray(0,6,3) , "9/01/2023": generateUniqueRandomArray(0,6,1), 
+                "9/02/2023": generateUniqueRandomArray(0,6,1) , "9/03/2023": generateUniqueRandomArray(0,6,3), 
+                "9/04/2023": generateUniqueRandomArray(0,6,2) , "9/05/2023": generateUniqueRandomArray(0,6,5),
+                "9/06/2023": generateUniqueRandomArray(0,6,5) , "9/07/2023": generateUniqueRandomArray(0,6,4), 
+                "9/08/2023": generateUniqueRandomArray(0,6,3) , "9/09/2023": generateUniqueRandomArray(0,6,6), 
+                "9/10/2023": generateUniqueRandomArray(0,6,4) , "9/11/2023": generateUniqueRandomArray(0,6,4),
+                "9/12/2023": generateUniqueRandomArray(0,6,1) , "9/13/2023": generateUniqueRandomArray(0,6,4), 
+                "9/14/2023": generateUniqueRandomArray(0,6,4) , "9/15/2023": generateUniqueRandomArray(0,6,4), 
+                "9/16/2023": generateUniqueRandomArray(0,6,4) , "9/17/2023": generateUniqueRandomArray(0,6,3),
+                "9/18/2023": generateUniqueRandomArray(0,6,2) , "9/19/2023": generateUniqueRandomArray(0,6,4), 
+                "9/20/2023": generateUniqueRandomArray(0,6,3) , "9/21/2023": generateUniqueRandomArray(0,6,1), 
+                "9/22/2023": generateUniqueRandomArray(0,6,4) , "9/23/2023": generateUniqueRandomArray(0,6,4),
+                "9/24/2023": generateUniqueRandomArray(0,6,5) , "9/25/2023": generateUniqueRandomArray(0,6,2),
             }
         },
         "Dr. Michelle Gerber": {
@@ -57,12 +112,68 @@ const initialState = {
             lastName: "Gerber",
             advanced: ["Mental", "Requisitions"],
             booked: {
-                "9/18/2023": [1, 2, 3, 4, 5], "9/19/2023": [1, 2, 3, 4, 6],
-                "9/20/2023": [1, 5, 6], "9/21/2023": [1, 2, 3, 4, 5],
-                "9/22/2023": [1, 2, 3, 6], "9/23/2023": [1, 2, 3, 4, 5],
-                "9/24/2023": [1, 2, 3, 4], "9/25/2023": [0, 2, 3],
+                "8/27/2023": generateUniqueRandomArray(0,6,4) , "8/28/2023": generateUniqueRandomArray(0,6,3),   
+                "8/29/2023": generateUniqueRandomArray(0,6,4) , "8/30/2023": generateUniqueRandomArray(0,6,2), 
+                "8/31/2023": generateUniqueRandomArray(0,6,3) , "9/01/2023": generateUniqueRandomArray(0,6,1), 
+                "9/02/2023": generateUniqueRandomArray(0,6,1) , "9/03/2023": generateUniqueRandomArray(0,6,3), 
+                "9/04/2023": generateUniqueRandomArray(0,6,2) , "9/05/2023": generateUniqueRandomArray(0,6,5),
+                "9/06/2023": generateUniqueRandomArray(0,6,5) , "9/07/2023": generateUniqueRandomArray(0,6,4), 
+                "9/08/2023": generateUniqueRandomArray(0,6,3) , "9/09/2023": generateUniqueRandomArray(0,6,6), 
+                "9/10/2023": generateUniqueRandomArray(0,6,4) , "9/11/2023": generateUniqueRandomArray(0,6,4),
+                "9/12/2023": generateUniqueRandomArray(0,6,1) , "9/13/2023": generateUniqueRandomArray(0,6,4), 
+                "9/14/2023": generateUniqueRandomArray(0,6,4) , "9/15/2023": generateUniqueRandomArray(0,6,4), 
+                "9/16/2023": generateUniqueRandomArray(0,6,4) , "9/17/2023": generateUniqueRandomArray(0,6,3),
+                "9/18/2023": generateUniqueRandomArray(0,6,2) , "9/19/2023": generateUniqueRandomArray(0,6,4), 
+                "9/20/2023": generateUniqueRandomArray(0,6,3) , "9/21/2023": generateUniqueRandomArray(0,6,1), 
+                "9/22/2023": generateUniqueRandomArray(0,6,4) , "9/23/2023": generateUniqueRandomArray(0,6,4),
+                "9/24/2023": generateUniqueRandomArray(0,6,5) , "9/25/2023": generateUniqueRandomArray(0,6,2),
+            }
+        },
+        "Dr. James Fahmed": {
+            firstName: "James",
+            lastName: "Fahmed",
+            advanced: ["Mental", "Requisitions"],
+            booked: {
+                "8/27/2023": generateUniqueRandomArray(0,6,4) , "8/28/2023": generateUniqueRandomArray(0,6,3),   
+                "8/29/2023": generateUniqueRandomArray(0,6,4) , "8/30/2023": generateUniqueRandomArray(0,6,2), 
+                "8/31/2023": generateUniqueRandomArray(0,6,3) , "9/01/2023": generateUniqueRandomArray(0,6,1), 
+                "9/02/2023": generateUniqueRandomArray(0,6,1) , "9/03/2023": generateUniqueRandomArray(0,6,3), 
+                "9/04/2023": generateUniqueRandomArray(0,6,2) , "9/05/2023": generateUniqueRandomArray(0,6,5),
+                "9/06/2023": generateUniqueRandomArray(0,6,5) , "9/07/2023": generateUniqueRandomArray(0,6,4), 
+                "9/08/2023": generateUniqueRandomArray(0,6,3) , "9/09/2023": generateUniqueRandomArray(0,6,6), 
+                "9/10/2023": generateUniqueRandomArray(0,6,4) , "9/11/2023": generateUniqueRandomArray(0,6,4),
+                "9/12/2023": generateUniqueRandomArray(0,6,1) , "9/13/2023": generateUniqueRandomArray(0,6,4), 
+                "9/14/2023": generateUniqueRandomArray(0,6,4) , "9/15/2023": generateUniqueRandomArray(0,6,4), 
+                "9/16/2023": generateUniqueRandomArray(0,6,4) , "9/17/2023": generateUniqueRandomArray(0,6,3),
+                "9/18/2023": generateUniqueRandomArray(0,6,2) , "9/19/2023": generateUniqueRandomArray(0,6,4), 
+                "9/20/2023": generateUniqueRandomArray(0,6,3) , "9/21/2023": generateUniqueRandomArray(0,6,1), 
+                "9/22/2023": generateUniqueRandomArray(0,6,4) , "9/23/2023": generateUniqueRandomArray(0,6,4),
+                "9/24/2023": generateUniqueRandomArray(0,6,5) , "9/25/2023": generateUniqueRandomArray(0,6,2),
+            }
+        },
+        "Dr. Jacky Fahmed": {
+            firstName: "Jacky",
+            lastName: "Todi",
+            advanced: ["Mental", "Requisitions"],
+            booked: {
+                "8/27/2023": generateUniqueRandomArray(0,6,4) , "8/28/2023": generateUniqueRandomArray(0,6,3),   
+                "8/29/2023": generateUniqueRandomArray(0,6,4) , "8/30/2023": generateUniqueRandomArray(0,6,2), 
+                "8/31/2023": generateUniqueRandomArray(0,6,3) , "9/01/2023": generateUniqueRandomArray(0,6,1), 
+                "9/02/2023": generateUniqueRandomArray(0,6,1) , "9/03/2023": generateUniqueRandomArray(0,6,3), 
+                "9/04/2023": generateUniqueRandomArray(0,6,2) , "9/05/2023": generateUniqueRandomArray(0,6,5),
+                "9/06/2023": generateUniqueRandomArray(0,6,5) , "9/07/2023": generateUniqueRandomArray(0,6,4), 
+                "9/08/2023": generateUniqueRandomArray(0,6,3) , "9/09/2023": generateUniqueRandomArray(0,6,6), 
+                "9/10/2023": generateUniqueRandomArray(0,6,4) , "9/11/2023": generateUniqueRandomArray(0,6,4),
+                "9/12/2023": generateUniqueRandomArray(0,6,1) , "9/13/2023": generateUniqueRandomArray(0,6,4), 
+                "9/14/2023": generateUniqueRandomArray(0,6,4) , "9/15/2023": generateUniqueRandomArray(0,6,4), 
+                "9/16/2023": generateUniqueRandomArray(0,6,4) , "9/17/2023": generateUniqueRandomArray(0,6,3),
+                "9/18/2023": generateUniqueRandomArray(0,6,2) , "9/19/2023": generateUniqueRandomArray(0,6,4), 
+                "9/20/2023": generateUniqueRandomArray(0,6,3) , "9/21/2023": generateUniqueRandomArray(0,6,1), 
+                "9/22/2023": generateUniqueRandomArray(0,6,4) , "9/23/2023": generateUniqueRandomArray(0,6,4),
+                "9/24/2023": generateUniqueRandomArray(0,6,5) , "9/25/2023": generateUniqueRandomArray(0,6,2),
             }
         }
+        
     }
 
 }
