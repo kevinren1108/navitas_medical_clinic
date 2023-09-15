@@ -2,10 +2,15 @@ import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap'
 import React, { useState } from 'react'
 import { useAuth } from '../../Routes/authProvider'
 import { ExclamationCircle } from 'react-bootstrap-icons';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { handleAuthAlertDelete, handleAuthAlertPush } from './store/authSlice';
+// handleAuthAlertDelete, handleAuthAlertPush
 function Login() {
     const { login } = useAuth();
-    const [alert, setAlert] = useState([])
+
+    const authAlert = useSelector((state) => state.auth)
+    const dispatch = useDispatch()
+    // const [alert, setAlert] = useState([])
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
@@ -13,18 +18,14 @@ function Login() {
         e.preventDefault()
         
         if (password === "") {
-            if (!alert.includes("Entre Password"))
-                setAlert([...alert, "Entre Password"])
+            dispatch(handleAuthAlertPush("Please Entre Password"))
         } else {
-            const newAlert = alert.filter(item => item !== "Entre Password")
-            setAlert(newAlert)
+            dispatch(handleAuthAlertDelete("Please Entre Password"))
         }
         if (username === "") {
-            if (!alert.includes("Entre Username"))
-                setAlert([...alert, "Entre Username"])
+            dispatch(handleAuthAlertPush("Please Entre Username"))
         } else {
-            const newAlert = alert.filter(item => item !== "Entre Username")
-            setAlert(newAlert)
+            dispatch(handleAuthAlertDelete("Please Entre Username"))
         }
         if (username !== "" && password !== "") {
             handleSubmit()
@@ -51,8 +52,8 @@ function Login() {
                         <p className='mb-3 fs-4 fw-bolder'>
                         LOGIN
                         </p>
-                        {alert.length > 0 ? <Alert variant="danger" className=''>
-                            {alert.map((value, key) => (
+                        {authAlert.alert.length > 0 ? <Alert variant="danger" className=''>
+                            {authAlert.alert.map((value, key) => (
                                 <div key={key} className='d-flex '>
                                     <ExclamationCircle className="me-1" style={{ height: "24px" }} />
                                     <span>{value}</span>
@@ -64,7 +65,7 @@ function Login() {
 
                             <Form.Floating className='mb-3'>
                                 <Form.Control id="username" name="username" type="text"
-                                    autocapitalize="none"
+                                    autoCapitalize="none"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                 />
