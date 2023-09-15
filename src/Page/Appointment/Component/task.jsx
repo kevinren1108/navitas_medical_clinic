@@ -1,7 +1,9 @@
 import React from 'react'
 import { ListGroup, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleCategoryUpdate, handleTypeUpdate } from '../store/appointmentSlice';
+import { handleAlertPush, handleCategoryUpdate, 
+    handleTypeUpdate, handleAlertDelete 
+} from '../store/appointmentSlice';
 import AppointmentStats from './appointmentStats';
 
 
@@ -9,6 +11,7 @@ function Task(props) {
 
     const dispatch = useDispatch();
     const appointmentInfo = useSelector((state) => state.appointment)
+    const patientInfo = useSelector((state) => state.patient)
     const appointmentType = {
         "General": ["General Appointment", "General Appointment - Pharmacist"],
         "Mental": ["Mental Health", "Nutrition Consult", "Weight Loss Consult"],
@@ -21,11 +24,29 @@ function Task(props) {
 
     const appointmentCategory = Object.keys(appointmentType)
 
-    const handleNextStep = (e) => {
-        // console.log(e)
-        dispatch(handleTypeUpdate(e))
-        props.nextStep();
-        
+    function formValidation(){
+        if( patientInfo.id === ""){
+            dispatch(handleAlertPush("Choose Patient"))   
+        }else{
+            dispatch(handleAlertDelete("Choose Patient"))
+        }
+        if(appointmentInfo.appointmentCategory === "" ){
+            dispatch(handleAlertPush("Choose Category"))
+        }else{
+            dispatch(handleAlertDelete("Choose Category"))
+        }
+        if(appointmentInfo.appointmentType === "" ){
+            dispatch(handleAlertPush("Choose Type"))
+        }else{
+            dispatch(handleAlertDelete("Choose Type"))
+        }
+        if(patientInfo.id !== "" &&
+            appointmentInfo.appointmentCategory !== "" &&
+            appointmentInfo.appointmentType !== ""
+        ){
+
+            props.nextStep();
+        }
     };
 
     return (
@@ -37,6 +58,7 @@ function Task(props) {
                     <ListGroup>
                         {appointmentCategory.map((value, key) => (
                             <ListGroup.Item 
+                                className={ appointmentInfo.appointmentCategory === value ? "border border-3 border-primary" : ""}
                                 action key={key} variant="primary"
                                 onClick={() => dispatch(handleCategoryUpdate(value))}
                             >
@@ -49,10 +71,11 @@ function Task(props) {
                 <Col sm={8}>
                     Choose a type
                     <ListGroup>
-                        {appointmentType[appointmentInfo.appointmentCategory].map((value, key) => (
+                        { appointmentType[appointmentInfo.appointmentCategory].map((value, key) => (
                             <ListGroup.Item 
+                                className={ appointmentInfo.appointmentType === value ? "border border-3 border-primary" : ""}
                                 action key={key} variant="secondary"
-                                onClick={() => handleNextStep(value)}
+                                onClick={() => dispatch(handleTypeUpdate(value))}
                             >
                                 {value}
                             </ListGroup.Item>
@@ -62,7 +85,8 @@ function Task(props) {
                     </ListGroup>
                 </Col>
             </Row>
-            <AppointmentStats  step={1} {...props} />
+            <AppointmentStats  step={1}  {...props} nextStep={formValidation}/>
+           
         </div>
     )
 }

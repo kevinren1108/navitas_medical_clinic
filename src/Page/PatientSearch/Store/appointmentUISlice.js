@@ -19,7 +19,6 @@ export const appointmentUISlice = createSlice({
     },
 })
 
-// Action creators are generated for each case reducer function
 export const { handleUIChange, handlePatientSelection } = appointmentUISlice.actions
 
 export default appointmentUISlice.reducer

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
 import TextBubble from '../../../Layout/UI/textBubble'
 import { useGetPatientByIDQuery } from '../../../Services/patient'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { handlePatientChange } from '../store/patientSlice'
 
 
 function PatientSel() {
 
+    const dispatch = useDispatch()
     const uiInfo = useSelector((state) => state.appointmentUI)
     const { data, error, isLoading } = useGetPatientByIDQuery(uiInfo.selectPatientID)
     const [age, setAge] = useState()
@@ -27,9 +29,7 @@ function PatientSel() {
     }
 
     const genderPhase = (data) => {
-        // console.log(data)
         if (data ) {
-            console.log(data.gender)
             let gender = ""
             if (data.gender === true) 
                 gender = "Male" 
@@ -70,7 +70,7 @@ function PatientSel() {
     
     
     useEffect(() => {
-        // console.log(data)
+    
         const age = agePhase(data)
         const dataBirth = dateBirthPhase(data)
         const conditions = conditionsPhase(data)
@@ -84,7 +84,10 @@ function PatientSel() {
         setMedication(medications)
         setAllergies(allergies)
         setGender(gender)
-    }, [data])
+
+        dispatch(handlePatientChange(data))
+        // eslint-disable-next-line
+    }, [data]) 
 
     return (
         <div>
@@ -113,7 +116,7 @@ function PatientSel() {
                             </Col>
                         </Row >
                         <Row className='mb-3'>
-                            <h5>HEALTH CARD NUMBER</h5>
+                            <h5>HEALTH CARE NUMBER</h5>
                             <span>{data.healthCardNumber}</span>
                             <span>Issued by {data.healthCardIssuer} Health Service</span>
                         </Row>

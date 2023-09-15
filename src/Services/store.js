@@ -2,6 +2,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import patientIntakeReducer from '../Page/PatientSearch/Store/patientIntakeSlice'
 import appointmentUIReducer from '../Page/PatientSearch/Store/appointmentUISlice'
 import appointmentReducer  from '../Page/Appointment/store/appointmentSlice'
+import patientReducer from "../Page/Patient/store/patientSlice"
+import scheduleUIReducer from '../Page/Schedule/store/scheduleUISlice'
 import { patientApi } from './patient'
 import { setupListeners } from '@reduxjs/toolkit/dist/query'
 
@@ -11,6 +13,8 @@ export const store = configureStore({
         patientIntakeForm:  patientIntakeReducer,
         appointmentUI: appointmentUIReducer,
         appointment: appointmentReducer,
+        patient: patientReducer,
+        scheduleUI: scheduleUIReducer,
         [patientApi.reducerPath]: patientApi.reducer,
     },
     middleware: (getDefaultMiddleware) => 

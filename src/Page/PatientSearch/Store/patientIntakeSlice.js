@@ -68,7 +68,6 @@ export const patientIntakeSlice = createSlice({
     },
 })
 
-// Action creators are generated for each case reducer function
 export const { updateField, handleSamePhyscalAndMail, 
     handleDiffPhyscalAndMail, handleListPush, handleListDelete 
 } = patientIntakeSlice.actions
