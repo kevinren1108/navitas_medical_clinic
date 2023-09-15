@@ -18,7 +18,7 @@ function Booked() {
                 <Row className='d-flex justify-content-center pb-3'>
                     <Col sm={6}>
                         Here are the detials of patient's upcoing appointment.
-                        Please notify the patient be persent at clinic
+                        Please persent at clinic
                         <span className='fw-bolder'> 15 minutes before </span>
                         the appointment.
                     </Col>
@@ -66,7 +66,10 @@ function Booked() {
                 </Row>
                 <Row className=' d-flex justify-content-center'>
                     <Col sm={6} >
-                        <Button className='w-100' onClick={(e) => { e.preventDefault() }}>PRINT THIS PAGE</Button>
+                        <Button className='w-100' 
+                        onClick={() => { window.print()}}
+                        
+                        >PRINT THIS PAGE</Button>
                     </Col>
 
                 </Row>

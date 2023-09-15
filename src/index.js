@@ -9,6 +9,7 @@ import { store } from './Services/store';
 import { Provider } from 'react-redux';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch } from 'react-instantsearch';
+import { AuthProvider } from './Routes/authProvider';
 
 const searchClient = algoliasearch('UJ5LC3ULZV', '0a05aa28b5c723862f39a8007fdf35e9');
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,14 +17,17 @@ root.render(
     <InstantSearch searchClient={searchClient} indexName="instant_search">
         <Provider store={store}>
             <BrowserRouter>
-                <Container fluid>
-                    <Row className=''>    
-                        <Col className='px-0'>
-                            <Header />
-                            <App />           
-                        </Col>
-                    </Row>
-                </Container>
+                <AuthProvider>
+                    <Container fluid >
+                        <Row className=''>
+                            <Col className='px-0'>
+                                <Header />
+                                <App />
+                            </Col>
+                        </Row>
+                    </Container>
+                </AuthProvider>
+
             </BrowserRouter>
         </Provider>
     </InstantSearch>

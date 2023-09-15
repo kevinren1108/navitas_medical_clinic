@@ -1,11 +1,24 @@
 import React from 'react'
-import { Accordion, Row, Col, Container } from 'react-bootstrap'
+import { Accordion, Row, Col, Container, Button } from 'react-bootstrap'
 import Form from "react-bootstrap/Form";
-
-
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function EncounterDeatil() {
     const textPlaceHolder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim a minim veniam, quis nostrud exercitation ullamco laboris nisi ut"
+    const doc = new jsPDF();
+    const tableColumn = ["Field Id", "Title", "Description"];
+    const tableRows = [["1", "Date of visit", "01/08/2013"], ["1", "First Name", "Mcdonload"], ["2", "Last Name", "Jepthon"],
+        ["3", "Chief Complaint", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim a minim veniam, quis nostrud exercitation ullamco laboris nisi utLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim a minim veniam, quis nostrud exercitation ullamco laboris nisi utLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim a minim veniam, quis nostrud exercitation ullamco laboris nisi ut"],
+        ["4", "Other Symptoms", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim a minim veniam, quis nostrud exercitation ullamco laboris nisi utLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim a minim veniam, quis nostrud exercitation ullamco laboris nisi utLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim a minim veniam, quis nostrud exercitation ullamco laboris nisi ut"],
+        ["5", "React Change", "Behavior, Sleeping Habits, Weight Loss"]
+    ];
+    doc.autoTable(tableColumn, tableRows, { startY: 20 });
+    doc.text("Fictional Medical Clinic" ,14, 15)
+    function handleDownload(){
+        doc.save(`report_.pdf`);
+    }
+    
 
     return (
         <Container className=' pb-5'>
@@ -13,7 +26,7 @@ function EncounterDeatil() {
                 <div className='fs-4'>
                     Encounter Deatil
                 </div>
-                <Accordion defaultActiveKey="0">
+                <Accordion defaultActiveKey="0" className='mb-3'>
                     <Accordion.Item eventKey="0">
                         <Accordion.Header>Health Consolation</Accordion.Header>
                         <Accordion.Body>
@@ -59,10 +72,10 @@ function EncounterDeatil() {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Form.Control as="textarea" 
-                                    value={textPlaceHolder + textPlaceHolder + textPlaceHolder} 
-                                    rows={5} 
-                                    disabled />
+                                    <Form.Control as="textarea"
+                                        value={textPlaceHolder + textPlaceHolder + textPlaceHolder}
+                                        rows={5}
+                                        disabled />
                                 </Col>
                             </Row>
 
@@ -87,10 +100,10 @@ function EncounterDeatil() {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Form.Control as="textarea" 
-                                    value={textPlaceHolder + textPlaceHolder + textPlaceHolder} 
-                                    rows={5} 
-                                    disabled />
+                                    <Form.Control as="textarea"
+                                        value={textPlaceHolder + textPlaceHolder + textPlaceHolder}
+                                        rows={5}
+                                        disabled />
                                 </Col>
                             </Row>
 
@@ -126,16 +139,22 @@ function EncounterDeatil() {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Form.Control as="textarea" 
-                                    value={textPlaceHolder + textPlaceHolder + textPlaceHolder} 
-                                    rows={5} 
-                                    disabled />
+                                    <Form.Control as="textarea"
+                                        value={textPlaceHolder + textPlaceHolder + textPlaceHolder}
+                                        rows={5}
+                                        disabled />
                                 </Col>
                             </Row>
                         </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>
 
+                <div className="d-grid gap-2 ">
+                    <Button variant="primary" onClick={() => handleDownload()} >
+                        Generate Report
+                    </Button>
+
+                </div>
 
 
 
