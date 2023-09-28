@@ -1,16 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {  Col, Form, Row, InputGroup } from 'react-bootstrap'
 import { PlusCircle, XCircleFill } from 'react-bootstrap-icons'
 import IntakeStats from './intakeStats'
 
 function ThirdStep(props) {
+	const [nextStyle, setNextStyle] = useState("") // eslint-disable-line
 
 	const submit = () => {
         alert('You did it! Yay!') // eslint-disable-line
     };
 
 	return (
-		<div>
+		<Form>
 			<Row>
 				<h5>Immunizations</h5>
 				<Col>
@@ -244,8 +245,8 @@ function ThirdStep(props) {
 					
 				</Col>
 			</Row>
-			<IntakeStats step={3} {...props} nextStep={submit} />
-		</div>
+			<IntakeStats step={3} {...props} nextStep={submit} nextStyle={nextStyle} />
+		</Form>
 	)
 }
 

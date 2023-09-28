@@ -3,7 +3,8 @@ import {  Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux';
 import { handleUIChange } from '../Store/appointmentUISlice';
 
-function IntakeStats ({ nextStep, previousStep, totalSteps, step }) {
+function IntakeStats ({ nextStep, previousStep, totalSteps, step, nextStyle }) {
+	console.log(nextStyle)
 	const dispatch = useDispatch()
 	return (
 		<div className="d-flex justify-content-center ">
@@ -15,9 +16,14 @@ function IntakeStats ({ nextStep, previousStep, totalSteps, step }) {
 			<Button className='btn btn-secondary btn-block' onClick={previousStep}>Go Back</Button>
 		}
 		{step < totalSteps ?
-			<Button className='btn btn-secondary btn-block ms-auto' onClick={nextStep}>Continue</Button>
+			<Button className={'btn btn-secondary btn-block ms-auto' + nextStyle}   
+				onClick={nextStep}  
+				type="submit"
+			>
+				Continue
+			</Button>
 			:
-			<Button className='btn btn-success btn-block ms-auto' onClick={nextStep}>Finish</Button>
+			<Button className={'btn btn-success btn-block ms-auto '} onClick={nextStep}>Finish</Button>
 		}
 	</div>
 	)
